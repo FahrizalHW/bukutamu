@@ -61,6 +61,7 @@
 <script>
     function confirmDelete(event) {
         event.preventDefault(); // Stop the form from submitting immediately
+<<<<<<< HEAD
 
         Swal.fire({
             title: 'Are you sure?',
@@ -77,7 +78,6 @@
         })
     }
 </script>
-
 @endsection
 
 <script>
