@@ -55,7 +55,6 @@
                 <input type="password" name="password" placeholder="Password" required>
                 <button type="submit" class="text-white text-weight-bold bt">Submit</button>
 
-                <small class="d-block text-center mt-3">Belum Punya Akun? <a href="/register">Register</a></small>
                 <a href="/" class="d-block text-center mt-3">&laquo; Back to Home</a>
 
               </form>
