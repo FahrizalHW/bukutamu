@@ -35,7 +35,9 @@
         <tr>
           <td>{{$tamu->id}}</td>
           <td>{{$tamu->nama_tamu}}</td>
-          <td>{{$tamu->gambar}}</td>
+          <td>
+            <img src="{{ asset('storage/uploads/'.$tamu->gambar) }}" alt="Gambar" width="100">
+        </td>
           <td>{{$tamu->jenis_kelamin}}</td>
           <td>{{$tamu->asal}}</td>
           <td>{{$tamu->nohp}}</td>
@@ -79,58 +81,3 @@
     }
 </script>
 @endsection
-
-<script>
-  $(document).ready(function () {
-      // Handle form submission
-      $('form').on('submit', function (e) {
-          e.preventDefault(); // Prevent the form from refreshing the page
-
-          let formData = new FormData(this); // Create FormData object to handle file uploads
-
-          $.ajax({
-              url: "{{ route('tamu.store') }}", // Route untuk store tamu
-              type: "POST",
-              data: formData,
-              contentType: false,
-              processData: false,
-              success: function (response) {
-                  // Jika berhasil
-                  Swal.fire({
-                      title: 'Success!',
-                      text: 'Tamu added successfully',
-                      icon: 'success',
-                      confirmButtonText: 'OK'
-                  });
-
-                  // Reset form
-                  $('form')[0].reset();
-
-                  // Tambahkan tamu baru ke tabel (jika ada tabel daftar tamu)
-                  $('#guestbook-list').append(`
-                      <tr>
-                          <td>${response.id}</td>
-                          <td>${response.nama_tamu}</td>
-                          <td>${response.jenis_kelamin}</td>
-                          <td>${response.asal}</td>
-                          <td>${response.nohp}</td>
-                          <td>${response.tujuan}</td>
-                          <td>${response.keterangan}</td>
-                          <td>${response.created_at}</td>
-                      </tr>
-                  `);
-              },
-              error: function (response) {
-                  // Jika gagal
-                  Swal.fire({
-                      title: 'Error!',
-                      text: 'There was a problem adding the guest.',
-                      icon: 'error',
-                      confirmButtonText: 'OK'
-                  });
-              }
-          });
-      });
-  });
-</script>
-
