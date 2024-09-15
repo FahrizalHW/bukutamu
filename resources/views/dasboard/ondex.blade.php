@@ -37,7 +37,7 @@
           <td>{{$tamu->nama_tamu}}</td>
           <td>
             <img src="{{ asset('storage/uploads/'.$tamu->gambar) }}" alt="Gambar" width="100">
-        </td>
+          </td>
           <td>{{$tamu->jenis_kelamin}}</td>
           <td>{{$tamu->asal}}</td>
           <td>{{$tamu->nohp}}</td>
@@ -45,7 +45,7 @@
           <td>{{$tamu->keterangan}}</td>
           <td>{{$tamu->tanggal}}</td>
           <td>
-            <form action="{{route('bulanan.destroy', $tamu->id)}}" method="POST" onsubmit="return confirmDelete(event)">
+            <form id="deleteForm-{{$tamu->id}}" action="{{route('bulanan.destroy', $tamu->id)}}" method="POST" onsubmit="return confirmDelete(event, '{{$tamu->id}}')">
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-danger btn-sm">
@@ -61,9 +61,8 @@
 </div>
 
 <script>
-    function confirmDelete(event) {
+    function confirmDelete(event, formId) {
         event.preventDefault(); // Stop the form from submitting immediately
-<<<<<<< HEAD
 
         Swal.fire({
             title: 'Are you sure?',
@@ -75,9 +74,9 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                event.target.submit(); // Submit the form if confirmed
+                document.getElementById('deleteForm-' + formId).submit(); // Submit the form with the specific ID if confirmed
             }
-        })
+        });
     }
 </script>
 @endsection
