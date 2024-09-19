@@ -51,6 +51,9 @@ Route::resource('', TamuController::class);
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
 
+Route::get('/daftar-tamu', [TamuController::class, 'daftarTamuUmum'])->name('tamu.umum');
+
+
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');;
 Route::post('/register', [RegisterController::class, 'store']);
 

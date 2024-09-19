@@ -12,7 +12,7 @@
                 <a href="/login">Login</a>
                 @endauth
                 
-                <a href="/form-tamu">Form</a>
+                <a href="{{ route('tamu.umum') }}">Daftar Tamu</a>
             </div>
         </div>
         </div>

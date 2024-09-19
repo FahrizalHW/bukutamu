@@ -12,6 +12,17 @@ class TamuController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function daftarTamuUmum()
+     {
+         // Ambil semua data tamu
+         $tamus = Tamu::all();
+         
+         // Kirim data ke view
+         return view('tamu.umum', compact('tamus'));
+     }
+     
+
     public function index()
     {
         $tamus = Tamu::all();
