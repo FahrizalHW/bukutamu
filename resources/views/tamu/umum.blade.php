@@ -9,8 +9,12 @@
       <div class="card">
         <img src="{{ asset('storage/uploads/' . $tamu->gambar) }}" class="card-img-top" alt="{{ $tamu->nama_tamu }}" data-toggle="modal" data-target="#imageModal" data-image="{{ asset('storage/uploads/' . $tamu->gambar) }}" data-nama="{{ $tamu->nama_tamu }}" data-asal="{{ $tamu->asal }}" style="cursor: pointer;">
         <div class="card-body">
-          <h5 class="card-title">{{ $tamu->nama_tamu }}</h5>
-          <p class="card-text">Asal: {{ $tamu->asal }}</p>
+          <h5 class="card-title" style="font-family: 'Poppins', sans-serif; font-weight: 700; color: #333; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+            {{ $tamu->nama_tamu }}
+          </h5>
+          <p class="card-text" style="font-family: 'Roboto', sans-serif; font-weight: 400; font-style: italic; color: #333;">
+            Asal: {{ $tamu->asal }}
+          </p>
         </div>
       </div>
     </div>

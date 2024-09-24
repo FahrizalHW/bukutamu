@@ -1,11 +1,12 @@
+<!-- resources/views/livewire/webcam-capture.blade.php -->
+
 <div>
     <div x-data="{ camera: null }">
-        <video x-ref="video" class="w-full h-full" autoplay></video>
+        <video x-ref="video" class="w-full h-full" autoplay></video> <!-- CSS akan ditambahkan dari JS -->
 
-        <button x-on:click="camera = null">Stop Camera</button>
         <button x-on:click="capture">Capture Image</button>
 
-        <input type="file" wire:model="image" x-show="image">
+        <input type="hidden" name="imageData" id="imageData" wire:model="image">
 
         <div x-show="camera === null">
             <button x-on:click="startCamera">Start Camera</button>
@@ -24,5 +25,12 @@
             Livewire.emit('captureImage', imageData);
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        Livewire.emit('captureImage', document.getElementById('imageData').value);
+    });
+
+    // Menambahkan transformasi setelah kamera dimulai
+    document.querySelector('video').style.transform = 'scaleX(-1)';
 </script>
 @endpush

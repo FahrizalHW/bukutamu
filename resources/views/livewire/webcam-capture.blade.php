@@ -2,7 +2,7 @@
 
 <div>
     <div x-data="{ camera: null }">
-        <video x-ref="video" class="w-full h-full" autoplay></video>
+        <video x-ref="video" class="w-full h-full" autoplay></video> <!-- CSS akan ditambahkan dari JS -->
 
         <button x-on:click="capture">Capture Image</button>
 
@@ -29,5 +29,8 @@
     document.addEventListener('DOMContentLoaded', function () {
         Livewire.emit('captureImage', document.getElementById('imageData').value);
     });
+
+    // Menambahkan transformasi setelah kamera dimulai
+    document.querySelector('video').style.transform = 'scaleX(-1)';
 </script>
 @endpush
