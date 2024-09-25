@@ -6,14 +6,23 @@
   <div class="row">
     @foreach($tamus as $tamu)
     <div class="col-md-4 mb-4">
-      <div class="card">
-        <img src="{{ asset('storage/uploads/' . $tamu->gambar) }}" class="card-img-top" alt="{{ $tamu->nama_tamu }}" data-toggle="modal" data-target="#imageModal" data-image="{{ asset('storage/uploads/' . $tamu->gambar) }}" data-nama="{{ $tamu->nama_tamu }}" data-asal="{{ $tamu->asal }}" style="cursor: pointer;">
+      <!-- Bootstrap Card Component -->
+      <div class="card" style="width: 18rem;">
+        <img src="{{ asset('storage/uploads/' . $tamu->gambar) }}" class="card-img-top" alt="{{ $tamu->nama_tamu }}" style="cursor: pointer;">
         <div class="card-body">
-          <h5 class="card-title" style="font-family: 'Poppins', sans-serif; font-weight: 700; color: #333; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+          <!-- Nama Tamu dengan font menarik -->
+          <h5 class="card-title" style="font-family: 'Poppins', sans-serif; font-weight: 700; color: #2C3E50; font-size: 1.5rem; text-transform: capitalize; letter-spacing: 1px; text-shadow: 3px 3px 5px rgba(0,0,0,0.1);">
             {{ $tamu->nama_tamu }}
           </h5>
-          <p class="card-text" style="font-family: 'Roboto', sans-serif; font-weight: 400; font-style: italic; color: #333;">
+
+          <!-- Asal dengan gaya italic -->
+          <p class="card-text" style="font-family: 'Roboto', sans-serif; font-weight: 500; font-size: 1.1rem; font-style: italic; color: #2980B9; margin-bottom: 10px;">
             Asal: {{ $tamu->asal }}
+          </p>
+
+          <!-- Timestamp dengan gaya lebih halus -->
+          <p class="card-text" style="font-family: 'Lato', sans-serif; font-weight: 400; font-size: 0.9rem; color: #7F8C8D;">
+            Ditambahkan pada: {{ \Carbon\Carbon::parse($tamu->created_at)->format('d M Y, H:i') }}
           </p>
         </div>
       </div>
@@ -24,62 +33,25 @@
   <!-- Link Kembali ke Form -->
   <a href="{{ url('/') }}" class="back-link">Kembali ke Form</a>
   
-  <!-- Modal untuk menampilkan gambar dan informasi -->
-  <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="imageModalLabel">Detail Tamu</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body row">
-          <div class="col-md-6">
-            <img src="" id="modalImage" class="img-fluid" alt="Gambar Tamu">
-          </div>
-          <div class="col-md-6">
-            <h5 id="modalName"></h5>
-            <p id="modalOrigin"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <style>
     .back-link {
         position: absolute;
         top: 20px;
         right: 20px;
-        font-size: 18px; /* Ukuran font sesuai dengan preferensi */
-        font-weight: bold; /* Agar teks lebih tegas */
-        text-decoration: none; /* Hilangkan garis bawah */
-        color: #fff; /* Warna teks */
-        background-color: #5A5A5A; /* Warna latar belakang */
-        padding: 10px 20px; /* Padding dalam tombol */
-        border-radius: 5px; /* Membuat sudut membulat */
-        transition: background-color 0.3s ease; /* Animasi saat hover */
+        font-size: 18px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #fff;
+        background-color: #5A5A5A;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
     }
 
     .back-link:hover {
-        background-color: #3A3A3A; /* Warna saat di-hover */
+        background-color: #3A3A3A;
     }
   </style>
-
 </div>
-
-<script>
-  // JavaScript untuk mengubah gambar dan informasi dalam modal saat gambar diklik
-  $(document).on('click', 'img[data-toggle="modal"]', function() {
-    var imageSrc = $(this).data('image');
-    var name = $(this).data('nama');
-    var origin = $(this).data('asal');
-
-    $('#modalImage').attr('src', imageSrc);
-    $('#modalName').text(name);
-    $('#modalOrigin').text('Asal: ' + origin);
-  });
-</script>
-
 @endsection
+  
