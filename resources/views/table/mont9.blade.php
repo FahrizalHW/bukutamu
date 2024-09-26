@@ -30,7 +30,9 @@
                         <tr>
                             <td>{{ $tamu->id }}</td>
                             <td>{{ $tamu->nama_tamu }}</td>
-                            <td>{{ $tamu->gambar }}</td>
+                            <td>
+                                <img src="{{ asset('storage/uploads/'.$tamu->gambar) }}" alt="Gambar" width="100">
+                              </td> 
                             <td>{{ $tamu->jenis_kelamin }}</td>
                             <td>{{ $tamu->asal }}</td>
                             <td>{{ $tamu->nohp }}</td>
