@@ -4,7 +4,7 @@
 <header>
     <a href="" class="brand">Buku Tamu</a>
     
-    <div class="menu-btn">
+    <div class="menu-btn" onclick="toggleMenu()">
         
         <div class="navigation">
             <div class="navigation-item">
@@ -78,10 +78,13 @@
                     <div id="results">Gambar akan muncul di sini</div>
 
                     <label for="signature">Tanda Tangan:</label>
-                    <div class="signature-container">
-                        <canvas class="signature-canvas" id="signature" width="auto" height="100%"></canvas>
-                        <button type="button" id="clear-signature">Hapus Tanda Tangan</button>
-                    </div>
+<div class="signature-container">
+    <canvas class="signature-canvas" id="signature" width="auto" height="100%"></canvas>
+    <button type="button" id="clear-signature">Hapus Tanda Tangan</button>
+</div>
+
+<button type="button" id="prev-step-3">Previous</button>
+<button type="submit">Done</button>
 
                     <button type="button" id="prev-step-3">Previous</button>
                     <button type="submit">Done</button>
@@ -130,6 +133,77 @@
             var canvas = document.getElementById('signature');
             canvas.width = document.querySelector('.signature-container').offsetWidth;
         });
+
+    function toggleMenu() {
+        var navigation = document.querySelector('.navigation');
+        navigation.classList.toggle('active');
+    }
+
+
+    var canvas = document.getElementById('signature');
+    var ctx = canvas.getContext('2d');
+    var drawing = false;
+
+    canvas.width = canvas.getBoundingClientRect().width;
+    canvas.height = 300; 
+
+    function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+        };
+    }
+
+    canvas.addEventListener('mousedown', function(evt) {
+        drawing = true;
+        var pos = getMousePos(canvas, evt);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+    });
+
+    canvas.addEventListener('mousemove', function(evt) {
+        if (drawing) {
+            var pos = getMousePos(canvas, evt);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+    });
+
+    canvas.addEventListener('mouseup', function() {
+        drawing = false;
+        ctx.closePath();
+    });
+
+    canvas.addEventListener('mouseleave', function() {
+        drawing = false;
+    });
+
+    canvas.addEventListener('touchstart', function(evt) {
+        drawing = true;
+        var touch = evt.touches[0];
+        var pos = getMousePos(canvas, touch);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+    });
+
+    canvas.addEventListener('touchmove', function(evt) {
+        if (drawing) {
+            var touch = evt.touches[0];
+            var pos = getMousePos(canvas, touch);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+    });
+
+    canvas.addEventListener('touchend', function() {
+        drawing = false;
+        ctx.closePath();
+    });
+
+    document.getElementById('clear-signature').addEventListener('click', function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
 </script>
 
 @endsection

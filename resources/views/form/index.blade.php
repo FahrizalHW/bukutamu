@@ -3,7 +3,7 @@
 @section('content')
     <header>
         <a href="" class="brand">Buku Tamu</a>
-        <div class="menu-btn">
+        <div class="menu-btn" onclick="toggleMenu()">
         <div class="navigation">
             <div class="navigation-item">
                 @auth
@@ -26,5 +26,12 @@
         <div class="media-icons">
             <a href="https://www.instagram.com/smkn4tgpinang/"><i class="fab fa-instagram"></i></a>
         </div>
+        <script>
+
+            function toggleMenu() {
+                var navigation = document.querySelector('.navigation');
+                navigation.classList.toggle('active');
+            }
+        </script>
     </section>
     @endsection
