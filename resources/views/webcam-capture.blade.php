@@ -2,7 +2,8 @@
 
 <div>
     <div x-data="{ camera: null }">
-        <video x-ref="video" class="w-full h-full" autoplay></video> <!-- CSS akan ditambahkan dari JS -->
+        <video x-ref="video" style="width: 300px; height: 300px;" class="w-full h-full" autoplay></video>
+ <!-- CSS akan ditambahkan dari JS -->
 
         <button x-on:click="capture">Capture Image</button>
 

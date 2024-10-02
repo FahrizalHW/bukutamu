@@ -119,6 +119,17 @@
         document.getElementById('step-3').style.display = 'none';
         document.getElementById('step-2').style.display = 'block';
     });
+
+    // JavaScript tambahan untuk membuat canvas tanda tangan responsif
+    window.addEventListener('resize', function() {
+            var canvas = document.getElementById('signature');
+            canvas.width = document.querySelector('.signature-container').offsetWidth;
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('signature');
+            canvas.width = document.querySelector('.signature-container').offsetWidth;
+        });
 </script>
 
 @endsection
