@@ -44,6 +44,9 @@ use App\Models\SemuaBulan;
 //     return view('dasboard.ondex');
 // })->name('dasboard.ondex');
 
+Route::get('/form-index', function () {
+    return view('form.index');
+})->name('form.index');
 
 
 Route::post('//store', [TamuController::class, 'store'])->name('tamu.store');

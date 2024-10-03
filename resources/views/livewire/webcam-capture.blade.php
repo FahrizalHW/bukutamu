@@ -32,5 +32,19 @@
 
     // Menambahkan transformasi setelah kamera dimulai
     document.querySelector('video').style.transform = 'scaleX(-1)';
+
+    function take_snapshot() {
+    // Take snapshot and get image data
+    Webcam.snap(function(data_uri) {
+        // Display result in the results div
+        document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
+
+        // Ensure the captured image takes the correct size
+        const resultImage = document.querySelector('#results img');
+        resultImage.style.width = '100%'; // Full width of the container
+        resultImage.style.height = 'auto'; // Maintain aspect ratio
+    });
+}
+
 </script>
 @endpush

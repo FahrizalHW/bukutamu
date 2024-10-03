@@ -2,7 +2,7 @@
 
 @section('content')
 <header>
-    <a href="" class="brand">Buku Tamu</a>
+    <a href="{{ route('form.index') }}" class="brand">Buku Tamu</a>
         <div class="menu-btn" onclick="toggleMenu()">
         <div class="navigation">
             <div class="navigation-item">
@@ -126,7 +126,10 @@
     }
 
     window.addEventListener('resize', resizeCanvas);
-    document.addEventListener('DOMContentLoaded', resizeCanvas);
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tambahkan delay untuk memastikan elemen sudah di-render sepenuhnya di mobile
+        setTimeout(resizeCanvas, 100);
+    });
 
     // Setup signature drawing functionality
     var canvas = document.getElementById('signature');
@@ -134,7 +137,7 @@
     var drawing = false;
 
     canvas.width = canvas.getBoundingClientRect().width;
-    canvas.height = 300; 
+    canvas.height = 300;
 
     function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
@@ -144,6 +147,40 @@
         };
     }
 
+    function getTouchPos(canvas, touchEvent) {
+        var rect = canvas.getBoundingClientRect();
+        var touch = touchEvent.touches[0];
+        return {
+            x: touch.clientX - rect.left,
+            y: touch.clientY - rect.top
+        };
+    }
+
+    // Prevent scrolling when touching the canvas
+    canvas.addEventListener('touchstart', function(evt) {
+        evt.preventDefault();
+        drawing = true;
+        var pos = getTouchPos(canvas, evt);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+    }, false);
+
+    canvas.addEventListener('touchmove', function(evt) {
+        evt.preventDefault();
+        if (drawing) {
+            var pos = getTouchPos(canvas, evt);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+    }, false);
+
+    canvas.addEventListener('touchend', function(evt) {
+        evt.preventDefault();
+        drawing = false;
+        ctx.closePath();
+    }, false);
+
+    // Mouse events for desktop
     canvas.addEventListener('mousedown', function(evt) {
         drawing = true;
         var pos = getMousePos(canvas, evt);
@@ -168,31 +205,16 @@
         drawing = false;
     });
 
-    canvas.addEventListener('touchstart', function(evt) {
-        drawing = true;
-        var touch = evt.touches[0];
-        var pos = getMousePos(canvas, touch);
-        ctx.beginPath();
-        ctx.moveTo(pos.x, pos.y);
-    });
-
-    canvas.addEventListener('touchmove', function(evt) {
-        if (drawing) {
-            var touch = evt.touches[0];
-            var pos = getMousePos(canvas, touch);
-            ctx.lineTo(pos.x, pos.y);
-            ctx.stroke();
-        }
-    });
-
-    canvas.addEventListener('touchend', function() {
-        drawing = false;
-        ctx.closePath();
-    });
-
     document.getElementById('clear-signature').addEventListener('click', function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
+
+    // Function to toggle the navigation menu
+    function toggleMenu() {
+        const navigation = document.querySelector('.navigation');
+        navigation.classList.toggle('active');
+    }
 </script>
+
 
 @endsection
