@@ -21,18 +21,63 @@ body {
     overflow: hidden; /* Ensure elements don't overflow */
 }
 
-/* Tambahkan ini di CSS untuk memastikan toggle berfungsi */
+/* Navigasi Menu Styling */
 .navigation {
-    display: none;
+    display: flex; /* Menampilkan menu secara default di desktop */
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 20px;
 }
 
-.navigation.active {
-    display: block;
+.navigation-item a {
+    text-decoration: none;
+    margin-left: 20px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Toggle Menu untuk versi mobile */
+.menu-btn {
+    display: none; /* Hidden di desktop */
+}
+
+@media (max-width: 768px) {
+    .navigation {
+        display: none;
+    }
+
+    .navigation.active {
+        display: block;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: white;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu-btn {
+        display: block;
+        cursor: pointer;
+        font-size: 20px;
+        color: #333;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .navigation-item a {
+        display: block;
+        margin-bottom: 10px;
+        color: #333;
+    }
 }
 
 /* Guestbook form layout adjustments */
 .guestbook-form {
-    max-width: 600px; 
+    max-width: 600px;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
