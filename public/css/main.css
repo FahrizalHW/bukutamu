@@ -1,3 +1,26 @@
+/* Global styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f9;
+    padding: 20px;
+    overflow: hidden; /* Ensure elements don't overflow */
+}
+
 /* Guestbook form layout adjustments */
 .guestbook-form {
     max-width: 600px;
@@ -28,6 +51,7 @@
     border-radius: 5px;
 }
 
+/* Button styling */
 .guestbook-form button {
     background-color: #b3b3f5;
     color: white;
@@ -71,14 +95,30 @@
     margin-bottom: 10px;
 }
 
-
-/* Webcam and signature responsiveness */
 #my_camera {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
+    width: 100%; /* Adjusts to the width of the container */
+    max-width: 100%; /* Full width on all screens */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 5px;
+    overflow: hidden;
 }
 
+#results {
+    width: 100%;
+    max-width: 100%; /* Full width for snapshot results */
+    height: auto; /* Maintain aspect ratio */
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+/* Ensure the camera feed video fits */
+#my_camera video {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Webcam and signature responsiveness */
 .signature-container {
     border: 1px solid #ccc;
     position: relative;
@@ -93,14 +133,18 @@
     display: block;
 }
 
-
+/* Additional responsiveness */
 @media only screen and (max-width: 600px) {
     .guestbook-form {
         width: 100%;
     }
 
-    #my_camera, .signature-container {
-        width: 100%;
+    #my_camera, #results, .signature-container {
+        width: 100%; /* Full width on smaller screens */
+        max-width: 100%;
+    }
+
+    .signature-canvas {
+        height: 200px; /* Adjust height for smaller screens */
     }
 }
-

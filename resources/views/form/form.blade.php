@@ -3,9 +3,7 @@
 @section('content')
 <header>
     <a href="" class="brand">Buku Tamu</a>
-    
-    <div class="menu-btn" onclick="toggleMenu()">
-        
+        <div class="menu-btn" onclick="toggleMenu()">
         <div class="navigation">
             <div class="navigation-item">
                 @auth
@@ -14,14 +12,14 @@
                 <a href="/login">Login</a>
                 @endauth
                 
-                <a href="/">Home</a>
+                <a href="{{ route('tamu.umum') }}">Daftar Tamu</a>
             </div>
         </div>
-    </div>
+        </div>
 </header>
 
 <section class="home">
-    <img src="assetsform/img/hand-painted-watercolor-background-with-sky-clouds-shape.png" alt="" class="imaged">
+    <img src="assetsform/img/hand-painted-watercolor-background-with-sky-clouds-shape.png" alt="background image" class="imaged img-fluid">
     <div class="content">
         <div class="guestbook-form">
             <h3>Form Buku Tamu</h3>
@@ -78,13 +76,10 @@
                     <div id="results">Gambar akan muncul di sini</div>
 
                     <label for="signature">Tanda Tangan:</label>
-<div class="signature-container">
-    <canvas class="signature-canvas" id="signature" width="auto" height="100%"></canvas>
-    <button type="button" id="clear-signature">Hapus Tanda Tangan</button>
-</div>
-
-<button type="button" id="prev-step-3">Previous</button>
-<button type="submit">Done</button>
+                    <div class="signature-container">
+                        <canvas class="signature-canvas" id="signature"></canvas>
+                        <button type="button" id="clear-signature">Hapus Tanda Tangan</button>
+                    </div>
 
                     <button type="button" id="prev-step-3">Previous</button>
                     <button type="submit">Done</button>
@@ -98,7 +93,6 @@
             </form>
         </div>
     </div>
-
 </section>
 
 <script>
@@ -124,22 +118,17 @@
     });
 
     // JavaScript tambahan untuk membuat canvas tanda tangan responsif
-    window.addEventListener('resize', function() {
-            var canvas = document.getElementById('signature');
-            canvas.width = document.querySelector('.signature-container').offsetWidth;
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var canvas = document.getElementById('signature');
-            canvas.width = document.querySelector('.signature-container').offsetWidth;
-        });
-
-    function toggleMenu() {
-        var navigation = document.querySelector('.navigation');
-        navigation.classList.toggle('active');
+    function resizeCanvas() {
+        var canvas = document.getElementById('signature');
+        var container = document.querySelector('.signature-container');
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
     }
 
+    window.addEventListener('resize', resizeCanvas);
+    document.addEventListener('DOMContentLoaded', resizeCanvas);
 
+    // Setup signature drawing functionality
     var canvas = document.getElementById('signature');
     var ctx = canvas.getContext('2d');
     var drawing = false;
