@@ -18,82 +18,108 @@
         </div>
 </header>
 
-<section class="home">
-    <img src="assetsform/img/hand-painted-watercolor-background-with-sky-clouds-shape.png" alt="background image" class="imaged img-fluid">
-    <div class="content">
-        <div class="guestbook-form">
-            <h3>Form Buku Tamu</h3>
-            
-            <form action="{{route('tamu.store')}}" method="post" enctype="multipart/form-data">
-                {{csrf_field()}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buku Tamu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="home">
+        <img src="assetsform/img/hand-painted-watercolor-background-with-sky-clouds-shape.png" alt="background image" class="imaged img-fluid">
+        <div class="content container">
+            <div class="guestbook-form">
+                <h3>Form Buku Tamu</h3>
+                <form action="{{route('tamu.store')}}" method="post" enctype="multipart/form-data">
+                    {{csrf_field()}}
+                    
+                    <!-- Step 1: Personal Information -->
+                    <div id="step-1">
+                        <h4>Informasi Pribadi</h4>
 
-                <!-- Step 1: Personal Information -->
-                <div id="step-1">
-                    <h4>Informasi Pribadi</h4>
+                        <div class="mb-3">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="nama_tamu" class="form-control" required>
+                        </div>
 
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="nama_tamu" required>
+                        <div class="mb-3">
+                            <label for="gender">Gender:</label>
+                            <select id="gender" name="jenis_kelamin" class="form-select" required>
+                                <option value="" hidden selected>Pilih Jenis Kelamin</option>
+                                <option value="male">Laki-Laki</option>
+                                <option value="female">Perempuan</option>
+                            </select>
+                        </div>
 
-                    <label for="gender">Gender:</label>
-                    <select id="gender" name="jenis_kelamin" required>
-                        <option value="" hidden selected>Pilih Jenis Kelamin</option>
-                        <option value="male">Laki-Laki</option>
-                        <option value="female">Perempuan</option>
-                    </select>
+                        <div class="mb-3">
+                            <label for="phone">No HP:</label>
+                            <input type="text" id="phone" name="nohp" class="form-control" required>
+                        </div>
 
-                    <label for="phone">No HP:</label>
-                    <input type="text" id="phone" name="nohp" required>
+                        <div class="mb-3">
+                            <label for="institution">Asal Instansi:</label>
+                            <input type="text" id="institution" name="asal" class="form-control" required>
+                        </div>
 
-                    <label for="institution">Asal Instansi:</label>
-                    <input type="text" id="institution" name="asal" required>
-
-                    <button type="button" id="next-step-1">Next</button>
-                </div>
-
-                <!-- Step 2: Purpose Information -->
-                <div id="step-2" style="display:none;">
-                    <h4>Informasi Tujuan</h4>
-
-                    <label for="tujuan">Tujuan:</label>
-                    <input type="text" id="tujuan" name="tujuan" required>
-
-                    <label for="purpose">Keterangan:</label>
-                    <textarea id="purpose" name="keterangan" rows="4" required></textarea>
-
-                    <button type="button" id="prev-step-2">Previous</button>
-                    <button type="button" id="next-step-2">Next</button>
-                </div>
-
-                <!-- Step 3: Snapshot and Signature -->
-                <div id="step-3" style="display:none;">
-                    <h4>Foto dan Tanda Tangan</h4>
-
-                    <label for="webcam">Camera</label>
-                    <div id="my_camera"></div>
-                    <br />
-                    <input type=button value="Take Snapshot" onClick="take_snapshot()">
-                    <input type="hidden" name="gambar" class="image-tag">
-                    <div id="results">Gambar akan muncul di sini</div>
-
-                    <label for="signature">Tanda Tangan:</label>
-                    <div class="signature-container">
-                        <canvas class="signature-canvas" id="signature"></canvas>
-                        <button type="button" id="clear-signature">Hapus Tanda Tangan</button>
+                        <button type="button" id="next-step-1" class="btn btn-primary">Next</button>
                     </div>
 
-                    <button type="button" id="prev-step-3">Previous</button>
-                    <button type="submit">Done</button>
-                </div>
+                    <!-- Step 2: Purpose Information -->
+                    <div id="step-2" style="display:none;">
+                        <h4>Informasi Tujuan</h4>
 
-                @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-                @endif
-            </form>
+                        <div class="mb-3">
+                            <label for="tujuan">Tujuan:</label>
+                            <input type="text" id="tujuan" name="tujuan" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="purpose">Keterangan:</label>
+                            <textarea id="purpose" name="keterangan" rows="4" class="form-control" required></textarea>
+                        </div>
+
+                        <button type="button" id="prev-step-2" class="btn btn-secondary">Previous</button>
+                        <button type="button" id="next-step-2" class="btn btn-primary">Next</button>
+                    </div>
+
+                    <!-- Step 3: Snapshot and Signature -->
+                    <div id="step-3" style="display:none;">
+                        <h4>Foto dan Tanda Tangan</h4>
+
+                        <label for="webcam">Camera</label>
+                        <div id="my_camera"></div>
+                        <br />
+                        <input type=button value="Take Snapshot" onClick="take_snapshot()" class="btn btn-warning">
+                        <input type="hidden" name="gambar" class="image-tag">
+                        <div id="results" class="mt-3">Gambar akan muncul di sini</div>
+
+                        <div class="signature-container">
+                            <label for="signature">Tanda Tangan:</label>
+                            <canvas class="signature-canvas" id="signature"></canvas>
+                            <button type="button" id="clear-signature" class="btn btn-danger mt-3">Hapus Tanda Tangan</button>
+                        </div>
+
+                        <button type="button" id="prev-step-3" class="btn btn-secondary">Previous</button>
+                        <button type="submit" class="btn btn-success">Done</button>
+                    </div>
+
+                    @if(session('success'))
+                    <div class="alert alert-success mt-3">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+                </form>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
 
 <script>
     // JavaScript to handle step navigation
