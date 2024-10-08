@@ -2,80 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bulanan;
-use Illuminate\Http\Request;
 use App\Models\Tamu;
+use Illuminate\Http\Request;
 
-class BulananController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-{
-    $tamu = Tamu::all();
-    return view("dasboard.ondex", compact("tamu"));
-}
-public function filter(){
-    $tamu = Tamu::all();
-    return view("dasboard.filter", compact("tamu"));
-}
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+class BulananController extends Controller {
+  public function index(Request $request) {
+    $query = Tamu::query();
+    // Cek apakah ada filter bulan
+    if ($request->has('bulan') && $request->bulan) {
+      $bulan = $request->bulan;
+      $query->whereMonth('tanggal', $bulan);
     }
+    $tamu = $query->get();
+    return view("dasboard.index", compact("tamu"));
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Bulanan $bulanan)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Bulanan $bulanan)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Bulanan $bulanan)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-{
-    // Find the Tamu record by ID
+  public function filter(Request $request) {
+    // Meneruskan ke fungsi index untuk menampilkan filter
+    return $this->index($request);
+  }
+  
+  public function show($id) {
+    // Temukan data tamu berdasarkan ID
     $tamu = Tamu::findOrFail($id);
-
-    // Delete the Tamu record
+    // Tampilkan view dengan data tamu
+    return view('dasboard.show', compact('tamu'));
+  }
+  
+  public function destroy($id) {
+    $tamu = Tamu::findOrFail($id);
     $tamu->delete();
-
-    // Redirect back with a success message
-    return redirect()->route('dashboard.ondex')->with('success', 'Tamu deleted successfully');
+    return redirect()->route('bulanan.index')->with('success', 'Tamu deleted successfully');
+  }
 }
 
-}

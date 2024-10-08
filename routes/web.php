@@ -39,53 +39,12 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/bulanan/{bulanan}/delete', [BulananController::class, 'destroy']);
 
 Route::resource('bulanan', BulananController::class);
+Route::get('bulanan/filter', [BulananController::class, 'filter'])->name('bulanan.filter');
+Route::get('bulanan/{id}', [BulananController::class, 'show'])->name('bulanan.show');
+
 Route::resource('edit', ProfilController::class);
 route::post('update/{profil}', 'App\Http\Controllers\ProfilController@update')->name('profil.update');
 Route::resource('Admin', BulananController::class)->middleware('auth');
 Route::resource('Semua-bulan', SemuaBulanController::class);
-
-
-Route::get('/bulanan', [BulananController::class, 'index'])->name('dashboard.ondex');
-Route::get('/Semua-bulan', [SemuaBulanController::class, 'index'])->name('dashboard.index');
-
-
-// January
-Route::get('/january', [SemuaBulanController::class, 'index1'])->name('table.mont1');
-
-// February
-Route::get('/february', [SemuaBulanController::class, 'index2'])->name('monthly-data.february');
-
-// March
-Route::get('/march', [SemuaBulanController::class, 'index3'])->name('monthly-data.march');
-
-// April
-Route::get('/april', [SemuaBulanController::class, 'index4'])->name('monthly-data.april');
-
-// May
-Route::get('/may', [SemuaBulanController::class, 'index5'])->name('monthly-data.may');
-
-// June
-Route::get('/june', [SemuaBulanController::class, 'index6'])->name('monthly-data.june');
-
-// July
-Route::get('/july', [SemuaBulanController::class, 'index7'])->name('monthly-data.july');
-
-// August
-Route::get('/august', [SemuaBulanController::class, 'index8'])->name('monthly-data.august');
-
-// September
-Route::get('/september', [SemuaBulanController::class, 'index9'])->name('monthly-data.september');
-
-// October
-Route::get('/october', [SemuaBulanController::class, 'index10'])->name('monthly-data.october');
-
-// November
-Route::get('/november', [SemuaBulanController::class, 'index11'])->name('monthly-data.november');
-
-// December
-Route::get('/december', [SemuaBulanController::class, 'index12'])->name('monthly-data.december');
-
-
-
 
 
