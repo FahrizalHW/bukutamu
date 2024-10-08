@@ -23,7 +23,7 @@ class LoginController extends Controller
         if(Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/Admin');
+            return redirect()->intended('/bulanan');
         }
 
         return back()->with('LoginEror', 'Login failed!');

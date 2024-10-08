@@ -22,10 +22,10 @@
   <body>
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
-        @include('includes.sidebar')
+        @include('layouts.__sidebar')
         <div class="layout-page">
           <!-- Navbar -->
-          @include('includes.navbar')
+          @include('layouts.__navbar')
           <div class="content-wrapper">
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
