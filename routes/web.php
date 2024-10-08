@@ -2,18 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TamuController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BulananController;
-use Livewire\Livewire;
-use App\Http\Livewire\WebcamCapture;
-use App\Http\Controllers\WebcamController;
-use App\Models\Tamu;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\SemuaBulanController;
 use App\Http\Controllers\ProfilController;
-use App\Models\Bulanan;
-use App\Models\Profil;
-use App\Models\SemuaBulan;
+
+
+Route::redirect('/', 'home');
+Route::get('home', [HomeController::class, 'index'])->name('home');
 
 Route::get('form-tamu', [TamuController::class, 'create'])->name('tamu.create');
 Route::post('form-tamu', [TamuController::class, 'store'])->name('tamu.store');
