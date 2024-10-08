@@ -97,7 +97,7 @@
       @endif
 
       <div class="form-group">
-        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" placeholder="Nama" required autofocus value="{{ old('nama') }}">
+        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="name" placeholder="Nama pengguna" required autofocus value="{{ old('nama') }}">
         @error('nama')
         <div class="invalid-feedback">
           {{ $message }}
