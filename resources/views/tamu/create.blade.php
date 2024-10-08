@@ -55,6 +55,19 @@
 </style>
 
 <div class="container mt-5">
+  <!-- Toast Notification -->
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+      <div class="toast-header">
+        <strong class="me-auto">Berhasil!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        {{ session('success') }} <!-- Ini akan menampilkan pesan sukses -->
+      </div>
+    </div>
+  </div>
+  <!-- / Toast Notification -->
   <div class="row justify-content-center">
     <div class="col-md-12">
       <div class="card">
@@ -118,6 +131,7 @@
       jpeg_quality: 100
     });
     Webcam.attach('#my_camera'); // Attach webcam to the element
+
     window.take_snapshot = function() {
       Webcam.snap(function(data_uri) {
         // Display the captured image in the results div with fixed width/height
@@ -126,6 +140,13 @@
         $('.image-tag').val(data_uri);
       });
     }
+
+    // Trigger toast notification if session contains success message
+    @if(session('success'))
+      var toastEl = document.getElementById('liveToast');
+      var toast = new bootstrap.Toast(toastEl);
+      toast.show();
+    @endif
   });
 </script>
 @endpush
