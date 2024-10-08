@@ -15,34 +15,6 @@ use App\Models\Bulanan;
 use App\Models\Profil;
 use App\Models\SemuaBulan;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-// Route::get('/Admin', function () {
-//     return view('includes.master');
-// });
-// Route::get('/Semua-bulan', function () {
-//     return view('dasboard.index');
-// })->name('dasboard.index');
-
-// Route::get('/tamu', function () {
-//     return view('form.index');
-// })->name('form.create');
-
-// Route::get('/Bulanan', function () {
-//     return view('dasboard.ondex');
-// })->name('dasboard.ondex');
 
 Route::get('/form-index', function () {
     return view('form.index');
