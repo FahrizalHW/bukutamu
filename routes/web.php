@@ -15,20 +15,13 @@ use App\Models\Bulanan;
 use App\Models\Profil;
 use App\Models\SemuaBulan;
 
-
-Route::resource('', TamuController::class);
-Route::get('/form-index', function () {
-  return view('form.index');
-})->name('form.index');
-
-
-Route::post('//store', [TamuController::class, 'store'])->name('tamu.store');
-Route::get('/form-tamu', [TamuController::class, 'index2'])->name('tamu.index');
+Route::get('form-tamu', [TamuController::class, 'create'])->name('tamu.create');
+Route::post('form-tamu', [TamuController::class, 'store'])->name('tamu.store');
+Route::get('/daftar-tamu', [TamuController::class, 'daftarTamuUmum'])->name('tamu.umum');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
 
-Route::get('/daftar-tamu', [TamuController::class, 'daftarTamuUmum'])->name('tamu.umum');
 
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');;
 Route::post('/register', [RegisterController::class, 'store']);

@@ -1,0 +1,59 @@
+  body {
+    background-color: #B4D6CD;
+    /* Light teal background */
+  }
+
+  .card {
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    /* Card background */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header {
+    background-color: #FFDA76;
+    /* Soft yellow header */
+    color: #333;
+    /* Dark text color */
+    font-weight: bold;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .btn-primary {
+    background-color: #FF4E88;
+    /* Bright pink button */
+    border-color: #FF4E88;
+    /* Match border color */
+  }
+
+  .btn-primary:hover {
+    background-color: #FF8C9E;
+    /* Light pink on hover */
+    border-color: #FF8C9E;
+  }
+
+  label {
+    color: #333;
+    /* Dark color for labels */
+  }
+
+  .form-control,
+  .form-select {
+    border-radius: 5px;
+    border: 1px solid #FFDA76;
+    /* Soft yellow border */
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    border-color: #FF4E88;
+    /* Bright pink focus border */
+    box-shadow: 0 0 5px rgba(255, 78, 136, 0.5);
+  }
+
+  .text-center {
+    margin-bottom: 20px;
+    /* Add spacing below the image results */
+  }

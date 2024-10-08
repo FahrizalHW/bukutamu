@@ -1,132 +1,57 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use App\Models\akun_tujuan;
 use App\Models\Tamu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-class TamuController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
 
-     public function daftarTamuUmum()
-     {
-         // Ambil semua data tamu
-         $tamus = Tamu::all();
-         
-         // Kirim data ke view
-         return view('tamu.umum', compact('tamus'));
-     }
-     
+class TamuController extends Controller {
+  
+  public function daftarTamuUmum() {
+    // Ambil semua data tamu
+    $tamus = Tamu::all();
+    // Kirim data ke view
+    return view('tamu.umum', compact('tamus'));
+  }
 
-    public function index()
-    {
-        $tamus = Tamu::all();
-        return view('form.index', compact('tamus'));
-
-    }
-    public function index2()
-    {
-        
-        $akunTujuans = akun_tujuan::all();
-
-        // Pass data to the view
-        return view('form.form', compact('akunTujuans'));
-    }
-
-    public function create()
-    {
-        return view('form.form');
-    }
-
-    public function store(Request $request)
-{
-    // Validasi data input dari form
+  public function create() {
+    return view('tamu.create');
+  }
+  
+  public function store(Request $request) {
+    // 1. Validasi data yang masuk dari permintaan
     $validatedData = $request->validate([
-        'nama_tamu' => 'required|string',
-        'jenis_kelamin' => 'required|in:male,female',
-        'nohp' => 'required|string',
-        'asal' => 'required|string',
-        'tujuan' => 'required|string',
-        'keterangan' => 'required|string',
-        'gambar' => 'required|string', // Mengasumsikan 'gambar' adalah input Base64 dari webcam
+      'nama_tamu'      => 'required|string|max:255',
+      'jenis_kelamin'  => 'nullable|string',
+      'nohp'           => 'required|string|max:15', // Sesuaikan panjang maksimum sesuai kebutuhan
+      'asal'           => 'required|string|max:255',
+      'gambar'         => 'required|string', // Mengasumsikan 'gambar' adalah input Base64 dari webcam
     ]);
-
-    // Proses gambar dari Base64
+    // 2. Proses gambar Base64
     $img = $request->gambar;
-    $folderPath = "uploads/";
-
-    // Pisahkan base64 dengan tipe gambar
+    $folderPath = "uploads/"; // Tentukan folder untuk menyimpan gambar
+    // 3. Pisahkan string Base64 untuk mendapatkan data gambar
     $image_parts = explode(";base64,", $img);
-
-    // Periksa apakah elemen yang diperlukan ada dalam array
-    if (count($image_parts) == 2) {
-        // Ambil tipe gambar (misal: png, jpg, dll.)
-        $image_type_aux = explode("image/", $image_parts[0]);
-
-        // Pastikan tipe gambar ditemukan, jika tidak beri nilai default
-        $image_type = isset($image_type_aux[1]) ? $image_type_aux[1] : 'png';
-
-        // Decode data Base64
-        $image_base64 = base64_decode($image_parts[1]);
-
-        // Buat nama file unik untuk gambar
-        $fileName = uniqid() . '.' . $image_type;
-
-        // Simpan gambar menggunakan Storage Laravel di folder "uploads"
-        $filePath = $folderPath . $fileName;
-        Storage::disk('public')->put($filePath, $image_base64);
-
-        // Buat record tamu dengan data validasi dan path gambar
-        Tamu::create(array_merge($validatedData, ['gambar' => $fileName]));
-
-        // Redirect dengan pesan sukses
-        return redirect()->route('tamu.index')->with('success', 'Record created successfully');
+    // 4. Periksa apakah format valid
+    if (count($image_parts) === 2) {
+      // 4.1 Ambil tipe gambar (misal: png, jpg, dll.)
+      $image_type_aux = explode("image/", $image_parts[0]);
+      $image_type = isset($image_type_aux[1]) ? $image_type_aux[1] : 'png'; // Default ke png jika tidak ditemukan
+      // 4.2 Decode string Base64 ke data biner
+      $image_base64 = base64_decode($image_parts[1]);
+      // 4.3 Buat nama file unik untuk gambar
+      $fileName = uniqid() . '.' . $image_type;
+      // 4.4 Simpan gambar di penyimpanan publik
+      Storage::disk('public')->put($folderPath . $fileName, $image_base64);
+      // 5. Buat record tamu baru di database
+      Tamu::create(array_merge($validatedData, ['gambar' => $fileName]));
+      // 6. Redirect kembali ke route index dengan pesan sukses
+      return redirect()->route('tamu.create')->with('success', 'Data berhasil disimpan.');
     } else {
-        // Jika data Base64 tidak sesuai format, kembalikan error
-        return redirect()->back()->with('error', 'Invalid image format.');
+      // 7. Tangani format Base64 yang tidak valid
+      return redirect()->back()->with('error', 'Format gambar tidak valid.');
     }
+  }
 }
-
-
-    public function show($id)
-    {
-        $tamu = Tamu::find($id);
-        return view('tamus.show', compact('tamu'));
-    }
-
-    public function edit($id)
-    {
-        $tamu = Tamu::find($id);
-        return view('tamus.edit', compact('tamu'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $this->validate($request, [
-            // Tambahkan validasi sesuai kebutuhan
-        ]);
-
-        Tamu::find($id)->update($request->all());
-
-        return redirect()->route('tamu.index')->with('success', 'Tamu berhasil diperbarui');
-    }
-
-    public function destroy($id)
-    {
-        $tamu = Tamu::findOrFail($id);
-
-        // Delete the Tamu record
-        $tamu->delete();
-
-        // Redirect back with a success message
-        return redirect()->route('dasboard.ondex')->with('success', 'Tamu deleted successfully');
-    }
-    }
-
-
-
