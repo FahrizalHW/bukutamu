@@ -5,8 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Buku Tamu &mdash; SMK Negeri 4 Tanjungpinang</title>
-  <link rel="shortcut icon" type="image/png" href="{{ asset('assets/auth/images/logos/favicon.png') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/auth/css/styles.min.css') }}" />
+  <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/favicon.png') }}" />
+  <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
 </head>
 
 <body>
@@ -21,7 +21,7 @@
             <div class="card mb-0">
               <div class="card-body">
                 <!-- Logo positioned in the center -->
-                <img src="{{ asset('assets/auth/images/logos/smkn4tpi.png') }}" width="80" alt="" class="d-block mx-auto mb-4">
+                <img src="{{ asset('assets/images/logos/smkn4tpi.png') }}" width="80" alt="" class="d-block mx-auto mb-4">
                 <p class="text-center">Buku Tamu SMK Negeri 4 Tanjungpinang</p>
 
                 <!-- Formulir register -->
@@ -55,8 +55,8 @@
     </div>
   </div>
   
-  <script src="{{ asset('assets/auth/libs/jquery/dist/jquery.min.js') }}"></script>
-  <script src="{{ asset('assets/auth/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 </body>
 
 </html>

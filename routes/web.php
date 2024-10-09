@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\TamuController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BulananController;
@@ -14,6 +15,11 @@ Route::get('home', [HomeController::class, 'index'])->name('home');
 Route::get('form-tamu', [TamuController::class, 'create'])->name('tamu.create');
 Route::post('form-tamu', [TamuController::class, 'store'])->name('tamu.store');
 Route::get('/daftar-tamu', [TamuController::class, 'daftarTamuUmum'])->name('tamu.umum');
+// Route to run storage:link
+Route::get('generate-storage-link', function() {
+  Artisan::call('storage:link');
+  echo 'success';
+});
 
 Route::controller(AuthController::class)->group(function() {
   Route::get('auth/login', 'loginForm')->name('login')->middleware('guest');
