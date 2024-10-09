@@ -1,23 +1,46 @@
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-  <div class="app-brand demo">
-    <a href="#" class="app-brand-link">
-      <span class="app-brand-logo demo"></span>
-      <span class="app-brand-text demo menu-text fw-bolder ms-2">Buku Tamu</span>
-    </a>
-    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-      <i class="bx bx-chevron-left bx-sm align-middle"></i>
-    </a>
-  </div>
-  <div class="menu-inner-shadow"></div>
-  <ul class="menu-inner py-1">
-    <li class="menu-header small text-uppercase">
-      <span class="menu-header-text">Pages</span>
-    </li>
-    <li class="menu-item">
-      <a href="bulanan" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-home-circle"></i>
-        <div class="text-truncate">Data Bulanan</div>
-      </a>
-    </li>
-    </ul>
-  </aside>
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <p class="nav-small-cap">Buku Tamu</p>
+          <!-- <a href="./index.html" class="text-nowrap logo-img">
+            <img src="{{ asset ('assets/images/logos/dark-logo.svg') }}" width="180" alt="" />
+          </a> -->
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{route ('home')}}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-home"></i>
+                </span>
+                <span class="hide-menu">Home</span>
+              </a>
+            </li>
+            @if (auth()->check() && auth()->user()->role == 'superadmin')
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Home</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="" aria-expanded="false">
+                <span>
+                  <i class="ti ti-user-plus"></i>
+                </span>
+                <span class="hide-menu">Rekap</span>
+              </a>
+            </li>
+            @endif
+          </ul>
+
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
