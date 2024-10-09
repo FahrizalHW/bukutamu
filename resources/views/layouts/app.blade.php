@@ -17,7 +17,9 @@
     @include('layouts.__sidebar')
     <!--  Main wrapper -->
     <div class="body-wrapper">
+      @if (auth()->check() && auth()->user()->role == 'superadmin')
       @include('layouts.__navbar')
+      @endif
       @yield('content')
     </div>
   </div>
