@@ -19,4 +19,12 @@ class Tamu extends Model {
   protected $casts = [
     'tanggal' => 'datetime:Y-m-d H:i:s'
   ];
+  
+  // Scope untuk filter berdasarkan bulan menggunakan kolom 'tanggal'
+  public function scopeFilterByMonth($query, $bulan) {
+    if ($bulan) {
+      return $query->whereMonth('tanggal', $bulan);
+    }
+    return $query;
+  }
 }

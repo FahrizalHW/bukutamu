@@ -14,14 +14,21 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
           <ul id="sidebarnav">
+            @if (auth()->check() && auth()->user()->role !== 'superadmin')
             <li class="sidebar-item">
               <a class="sidebar-link" href="{{route ('home')}}" aria-expanded="false">
-                <span>
-                  <i class="ti ti-home"></i>
-                </span>
                 <span class="hide-menu">Home</span>
               </a>
             </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{route ('tamu.index')}}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-home"></i>
+                </span>
+                <span class="hide-menu">Daftar Tamu</span>
+              </a>
+            </li>
+            @endif
             @if (auth()->check() && auth()->user()->role == 'superadmin')
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>

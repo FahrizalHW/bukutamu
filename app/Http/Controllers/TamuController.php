@@ -9,11 +9,9 @@ use Illuminate\Support\Facades\Storage;
 
 class TamuController extends Controller {
   
-  public function daftarTamuUmum() {
-    // Ambil semua data tamu
-    $tamus = Tamu::all();
-    // Kirim data ke view
-    return view('tamu.umum', compact('tamus'));
+  public function index() {
+    $visitor = Tamu::all();
+    return view('tamu.index', compact('visitor'));
   }
 
   public function create() {

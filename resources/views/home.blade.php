@@ -11,7 +11,7 @@
       @else
         <a href="/login">Login</a>
       @endauth
-      <a href="{{ route('tamu.umum') }}">Daftar Tamu</a>
+      <a href="{{ route('tamu.index') }}">Daftar Tamu</a>
     </div>
   </div>
 </header>

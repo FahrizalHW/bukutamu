@@ -8,6 +8,7 @@
         </a>
       </li>
     </ul>
+    @if (auth()->check() && auth()->user()->role == 'superadmin')
     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
       <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
         <li class="nav-item dropdown">
@@ -17,12 +18,16 @@
           </a>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
             <div class="message-body">
-              <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-outline-primary mx-auto mt-2 d-block w-75">Logout</button>
+              </form>
             </div>
           </div>
         </li>
       </ul>
     </div>
+    @endif
   </nav>
 </header>
 <!--  Header End -->

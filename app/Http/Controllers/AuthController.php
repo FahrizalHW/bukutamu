@@ -22,7 +22,7 @@ class AuthController extends Controller {
     $credentials = $request->only('username', 'password');
     if (Auth::attempt($credentials)) {
       // Login berhasil
-      return redirect()->route('home');
+      return redirect()->route('rekap.index');
     }
     // Login gagal, set session dengan error message
     return back()->with('error', 'Username atau password salah.');

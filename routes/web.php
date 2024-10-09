@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\TamuController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\BulananController;
+use App\Http\Controllers\RekapController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfilController;
 
@@ -14,7 +14,7 @@ Route::get('home', [HomeController::class, 'index'])->name('home');
 
 Route::get('form-tamu', [TamuController::class, 'create'])->name('tamu.create');
 Route::post('form-tamu', [TamuController::class, 'store'])->name('tamu.store');
-Route::get('/daftar-tamu', [TamuController::class, 'daftarTamuUmum'])->name('tamu.umum');
+Route::get('daftar-tamu', [TamuController::class, 'index'])->name('tamu.index');
 // Route to run storage:link
 Route::get('generate-storage-link', function() {
   Artisan::call('storage:link');
@@ -31,10 +31,7 @@ Route::controller(AuthController::class)->group(function() {
 
 // Routes with common 'auth' middleware
 Route::middleware(['auth'])->group(function () {
-  Route::resource('bulanan', BulananController::class);
-  Route::get('bulanan/filter', [BulananController::class, 'filter'])->name('bulanan.filter');
-  Route::get('bulanan/{id}', [BulananController::class, 'show'])->name('bulanan.show');
-  Route::get('/bulanan/{bulanan}/delete', [BulananController::class, 'destroy']);
-  Route::resource('edit', ProfilController::class);
-  Route::post('update/{profil}', 'App\Http\Controllers\ProfilController@update')->name('profil.update');
+  Route::get('rekap', [RekapController::class, 'index'])->name('rekap.index'); // Rute untuk menampilkan daftar
+  Route::get('rekap/filter', [RekapController::class, 'index'])->name('rekap.filter'); // Rute untuk memfilter
+  Route::resource('rekap', RekapController::class)->except(['index', 'show']); // Rute resource tanpa index dan show
 });

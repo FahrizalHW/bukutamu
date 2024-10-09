@@ -7,6 +7,7 @@
   <title>Buku Tamu</title>
   <link rel="shortcut icon" type="image/png" href="{{ asset ('assets/images/logos/favicon.png') }}" />
   <link rel="stylesheet" href="{{ asset ('assets/css/styles.min.css') }}" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 </head>
 
 <body>
@@ -16,9 +17,7 @@
     @include('layouts.__sidebar')
     <!--  Main wrapper -->
     <div class="body-wrapper">
-      @if (auth()->check() && auth()->user()->role == 'superadmin')
-        @include('layouts.__navbar')
-      @endif
+      @include('layouts.__navbar')
       @yield('content')
     </div>
   </div>
@@ -30,6 +29,20 @@
 
   <script src="{{ asset ('assets/js/webcam.min.js') }}"></script>
   @stack('scripts')
+  <!-- Datatables JS -->
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.datatables').DataTable({
+        // Konfigurasi lainnya
+        "searching": true,
+        "paging": true,
+        "info": true,
+        "autoWidth": true,
+      });
+    });
+  </script>  
 </body>
 
 </html>
