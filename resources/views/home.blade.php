@@ -3,7 +3,7 @@
 @section('title', 'Buku Tamu SMKN 4 Tanjungpinang')
 
 @php
-  $heroImage = 'assetsform/img/smkn4tpi.png';
+  $heroImage = 'assets/images/backgrounds/smkn4-tanjungpinang-hero.png';
 @endphp
 
 @section('content')

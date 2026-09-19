@@ -8,7 +8,7 @@
     <img src="{{ asset('assets/images/logos/smkn4tpi.png') }}" alt="Logo SMKN 4" width="42" height="42">
     <span>Buku Tamu SMKN 4</span>
   </a>
-  <a href="{{ route('home') }}" class="btn btn-outline-secondary btn-sm" title="Kembali ke beranda">
+  <a href="{{ route('home') }}" class="btn btn-outline-primary btn-sm" title="Kembali ke beranda">
     <i class="ti ti-home"></i>
   </a>
 </header>
@@ -16,7 +16,7 @@
 <main class="kiosk-main">
   <div class="kiosk-heading">
     <div>
-      <p class="text-success fw-semibold mb-1">Pencatatan kunjungan</p>
+      <p class="kiosk-eyebrow fw-semibold mb-1">Pencatatan kunjungan</p>
       <h1>Form Buku Tamu</h1>
     </div>
     <span class="kiosk-date">{{ now()->translatedFormat('d F Y') }}</span>
@@ -58,7 +58,7 @@
         </div>
       </div>
       <input type="hidden" name="gambar" id="gambar" value="{{ old('gambar') }}">
-      <button type="button" id="capture-button" class="btn btn-warning">
+      <button type="button" id="capture-button" class="btn btn-primary">
         <i class="ti ti-camera me-2"></i>Ambil Foto
       </button>
       @error('gambar')<div class="text-danger small mt-2">{{ $message }}</div>@enderror
@@ -117,7 +117,7 @@
           @error('keterangan')<div class="invalid-feedback">{{ $message }}</div>@enderror
         </div>
       </div>
-      <button id="submit-button" type="submit" class="btn btn-success btn-lg w-100 mt-4">
+      <button id="submit-button" type="submit" class="btn btn-primary btn-lg w-100 mt-4">
         <i class="ti ti-device-floppy me-2"></i>Simpan Kunjungan
       </button>
     </section>
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   Webcam.on('live', function () {
-    status.className = 'badge bg-success';
+    status.className = 'badge bg-primary';
     status.textContent = 'Kamera siap';
     captureButton.disabled = false;
   });
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
     Webcam.snap(function (dataUri) {
       imageInput.value = dataUri;
       result.innerHTML = '<img src="' + dataUri + '" alt="Foto pengunjung">';
-      status.className = 'badge bg-success';
+      status.className = 'badge bg-primary';
       status.textContent = 'Foto siap';
     });
   });

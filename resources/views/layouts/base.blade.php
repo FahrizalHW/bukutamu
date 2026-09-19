@@ -6,7 +6,7 @@
   <title>@yield('title', 'Buku Tamu SMKN 4 Tanjungpinang')</title>
   <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/favicon.png') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('css/bukutamu.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/bukutamu.css') }}">
   @stack('styles')
 </head>
 <body class="public-body">
