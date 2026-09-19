@@ -97,4 +97,29 @@ class AuthProfileTest extends TestCase
             ->assertRedirect(route('profile.edit'))
             ->assertSessionHasErrors(['username', 'password']);
     }
-}
+
+    public function test_account_menu_uses_initials_and_links_identity_to_profile(): void
+    {
+        $admin = User::factory()->create([
+            'full_name' => 'Admin Digital',
+            'username' => 'admin',
+        ]);
+
+        $this->actingAs($admin)
+            ->get(route('rekap.index'))
+            ->assertOk()
+            ->assertSee('<span class="user-initials" aria-hidden="true">AD</span>', false)
+            ->assertSee('Admin Digital')
+            ->assertSee(route('profile.edit'), false)
+            ->assertSee('Keluar')
+            ->assertDontSee('Superadmin')
+            ->assertDontSee('user-1.jpg');
+
+        $admin->update(['full_name' => null, 'username' => 'operator']);
+
+        $this->actingAs($admin->fresh())
+            ->get(route('rekap.index'))
+            ->assertOk()
+            ->assertSee('<span class="user-initials" aria-hidden="true">O</span>', false)
+            ->assertSee('operator');
+    }}

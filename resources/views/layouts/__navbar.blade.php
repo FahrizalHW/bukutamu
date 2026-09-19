@@ -14,27 +14,24 @@
     </button>
     <div class="navbar-collapse justify-content-end px-0">
       <ul class="navbar-nav flex-row ms-auto align-items-center">
-        <li class="nav-item me-3 text-end d-none d-sm-block">
-          <strong class="d-block">{{ $userName }}</strong>
-          <span class="text-muted small">Superadmin</span>
-        </li>
-        <li class="nav-item dropdown">
-          <button class="btn nav-icon-hover p-0 border-0" data-bs-toggle="dropdown" aria-expanded="false"
+        <li class="nav-item dropdown account-menu">
+          <button class="btn account-menu-trigger p-0 border-0" data-bs-toggle="dropdown" aria-expanded="false"
             aria-label="Menu akun">
             <span class="user-initials" aria-hidden="true">{{ $userInitials }}</span>
           </button>
-          <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up">
-            <div class="message-body">
-              <a href="{{ route('profile.edit') }}" class="d-flex align-items-center gap-2 dropdown-item">
-                <i class="ti ti-user"></i><span>Profil</span>
-              </a>
-              <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="d-flex align-items-center gap-2 dropdown-item text-danger">
-                  <i class="ti ti-logout"></i><span>Keluar</span>
-                </button>
-              </form>
-            </div>
+          <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up account-dropdown">
+            <a href="{{ route('profile.edit') }}" class="account-summary dropdown-item">
+              <span class="user-initials" aria-hidden="true">{{ $userInitials }}</span>
+              <span class="account-name">{{ $userName }}</span>
+            </a>
+            <div class="dropdown-divider m-0"></div>
+            <form action="{{ route('logout') }}" method="POST" class="m-0">
+              @csrf
+              <button type="submit" class="account-logout dropdown-item">
+                <i class="ti ti-logout" aria-hidden="true"></i>
+                <span>Keluar</span>
+              </button>
+            </form>
           </div>
         </li>
       </ul>
