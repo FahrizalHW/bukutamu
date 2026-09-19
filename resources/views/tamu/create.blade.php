@@ -8,9 +8,7 @@
     <img src="{{ asset('assets/images/logos/smkn4tpi.png') }}" alt="Logo SMKN 4" width="42" height="42">
     <span>Buku Tamu SMKN 4</span>
   </a>
-  <a href="{{ route('home') }}" class="btn btn-outline-primary btn-sm" title="Kembali ke beranda">
-    <i class="ti ti-home"></i>
-  </a>
+  <a href="{{ route('home') }}" class="btn btn-outline-primary btn-sm">Beranda</a>
 </header>
 
 <main class="kiosk-main">
