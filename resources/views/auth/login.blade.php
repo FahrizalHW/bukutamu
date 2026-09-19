@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login Admin - Buku Tamu</title>
+  <title>Login - Buku Tamu</title>
   <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/favicon.png') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/bukutamu.css') }}">
@@ -15,7 +15,7 @@
         <img src="{{ asset('assets/images/logos/smkn4tpi.png') }}" width="52" height="52" alt="Logo SMKN 4">
         <span class="fw-bold text-dark">Buku Tamu</span>
       </a>
-      <h1 class="auth-title">Login admin</h1>
+      <h1 class="auth-title">Login Buku Tamu</h1>
       <p class="text-muted mb-4">SMKN 4 Tanjungpinang</p>
 
       @if(session('error'))

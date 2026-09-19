@@ -11,10 +11,12 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/form-tamu', [TamuController::class, 'create'])->name('tamu.create');
-Route::post('/form-tamu', [TamuController::class, 'store'])
-    ->middleware('throttle:60,1')
-    ->name('tamu.store');
+Route::middleware(['auth', 'guestbook'])->group(function () {
+    Route::get('/form-tamu', [TamuController::class, 'create'])->name('tamu.create');
+    Route::post('/form-tamu', [TamuController::class, 'store'])
+        ->middleware('throttle:60,1')
+        ->name('tamu.store');
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('/auth/login', [AuthController::class, 'loginForm'])->name('login');

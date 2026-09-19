@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable {
   use HasFactory;
 
+  public const ROLE_SUPERADMIN = 'superadmin';
+  public const ROLE_GUEST = 'guest';
+
   protected $fillable = [
     'full_name',
     'username',

@@ -8,7 +8,17 @@
     <img src="{{ asset('assets/images/logos/smkn4tpi.png') }}" alt="Logo SMKN 4" width="42" height="42">
     <span>Buku Tamu SMKN 4</span>
   </a>
-  <a href="{{ route('home') }}" class="btn btn-outline-primary btn-sm">Beranda</a>
+  <div class="kiosk-header-actions">
+    <a href="{{ route('home') }}" class="btn btn-outline-primary btn-sm">Beranda</a>
+    @if(auth()->user()->role === \App\Models\User::ROLE_GUEST)
+      <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-outline-primary btn-sm">
+          <i class="ti ti-logout me-1" aria-hidden="true"></i>Keluar
+        </button>
+      </form>
+    @endif
+  </div>
 </header>
 
 <main class="kiosk-main">

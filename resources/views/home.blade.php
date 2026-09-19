@@ -21,10 +21,17 @@
       </a>
 
       @auth
-        <a href="{{ route('dashboard.index') }}" class="home-admin-link">
-          <i class="ti ti-layout-dashboard" aria-hidden="true"></i>
-          <span>Dashboard</span>
-        </a>
+        @if(auth()->user()->role === \App\Models\User::ROLE_GUEST)
+          <a href="{{ route('tamu.create') }}" class="home-admin-link">
+            <i class="ti ti-user-plus" aria-hidden="true"></i>
+            <span>Form Tamu</span>
+          </a>
+        @elseif(auth()->user()->role === \App\Models\User::ROLE_SUPERADMIN)
+          <a href="{{ route('dashboard.index') }}" class="home-admin-link">
+            <i class="ti ti-layout-dashboard" aria-hidden="true"></i>
+            <span>Dashboard</span>
+          </a>
+        @endif
       @else
         <a href="{{ route('login') }}" class="home-admin-link">
           <i class="ti ti-user-shield" aria-hidden="true"></i>

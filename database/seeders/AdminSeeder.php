@@ -10,7 +10,7 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        if (User::where('role', 'superadmin')->exists()) {
+        if (User::where('role', User::ROLE_SUPERADMIN)->exists()) {
             $this->command?->info('Akun superadmin sudah tersedia. Seeder dilewati.');
             return;
         }
@@ -33,7 +33,7 @@ class AdminSeeder extends Seeder
             'full_name' => $name,
             'username' => $username,
             'password' => $password,
-            'role' => 'superadmin',
+            'role' => User::ROLE_SUPERADMIN,
         ]);
     }
 }

@@ -2,12 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateProfileRequest extends FormRequest
 {
-    public function authorize(): bool { return $this->user()?->role === 'superadmin'; }
+    public function authorize(): bool { return $this->user()?->role === User::ROLE_SUPERADMIN; }
 
     public function rules(): array
     {

@@ -298,6 +298,17 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid #dce5ff;
 }
 
+.kiosk-header-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.kiosk-header-actions form {
+  margin: 0;
+}
+
 .kiosk-main {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
