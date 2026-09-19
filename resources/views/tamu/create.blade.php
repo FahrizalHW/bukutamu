@@ -134,10 +134,14 @@ document.addEventListener('DOMContentLoaded', function () {
   const status = document.getElementById('camera-status');
   const captureButton = document.getElementById('capture-button');
   const submitButton = document.getElementById('submit-button');
+  const cameraStage = document.querySelector('.camera-stage');
+  const measuredWidth = Math.round(cameraStage.getBoundingClientRect().width);
+  const previewWidth = measuredWidth > 0 ? measuredWidth : 320;
+  const previewHeight = Math.round(previewWidth * 3 / 4);
 
   Webcam.set({
-    width: 480,
-    height: 360,
+    width: previewWidth,
+    height: previewHeight,
     dest_width: 960,
     dest_height: 720,
     image_format: 'jpeg',
