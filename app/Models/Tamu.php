@@ -35,18 +35,20 @@ class Tamu extends Model
                     $query
                         ->where('nama_tamu', 'like', "%{$search}%")
                         ->orWhere('asal', 'like', "%{$search}%")
-                        ->orWhere('nohp', 'like', "%{$search}%");
+                        ->orWhere('tujuan', 'like', "%{$search}%");
                 });
             })
-            ->when($filters['tanggal_mulai'] ?? null, fn ($query, $date) => $query->whereDate('tanggal', '>=', $date))
-            ->when($filters['tanggal_selesai'] ?? null, fn ($query, $date) => $query->whereDate('tanggal', '<=', $date))
             ->when($filters['bulan'] ?? null, function ($query, $month) {
                 [$year, $monthNumber] = array_pad(explode('-', $month, 2), 2, null);
                 $query->whereYear('tanggal', $year)->whereMonth('tanggal', $monthNumber);
             })
             ->when(
-                $filters['jenis_kelamin'] ?? null,
-                fn ($query, $gender) => $query->where('jenis_kelamin', $gender)
+                ! ($filters['bulan'] ?? null) && ($filters['tanggal_mulai'] ?? null),
+                fn ($query) => $query->whereDate('tanggal', '>=', $filters['tanggal_mulai'])
+            )
+            ->when(
+                ! ($filters['bulan'] ?? null) && ($filters['tanggal_selesai'] ?? null),
+                fn ($query) => $query->whereDate('tanggal', '<=', $filters['tanggal_selesai'])
             );
     }
 }

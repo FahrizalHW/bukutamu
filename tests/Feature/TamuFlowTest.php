@@ -21,7 +21,7 @@ class TamuFlowTest extends TestCase
         $contents = ob_get_clean();
         imagedestroy($image);
 
-        return 'data:image/png;base64,' . base64_encode($contents);
+        return 'data:image/png;base64,'.base64_encode($contents);
     }
 
     private function validPayload(array $overrides = []): array
@@ -59,7 +59,7 @@ class TamuFlowTest extends TestCase
             ->assertSessionHas('success');
 
         $record = Tamu::sole();
-        Storage::disk('local')->assertExists('visitor-photos/' . $record->gambar);
+        Storage::disk('local')->assertExists('visitor-photos/'.$record->gambar);
         $this->assertStringEndsWith('.jpg', $record->gambar);
         $this->assertSame('Pertemuan sekolah', $record->tujuan);
     }
@@ -80,6 +80,7 @@ class TamuFlowTest extends TestCase
 
         $this->get(route('dashboard.index'))->assertRedirect(route('login'));
         $this->get(route('rekap.index'))->assertRedirect(route('login'));
+        $this->get(route('rekap.data'))->assertRedirect(route('login'));
         $this->get(route('rekap.show', $record))->assertRedirect(route('login'));
         $this->get(route('rekap.photo', $record))->assertRedirect(route('login'));
         $this->get(route('rekap.export.excel'))->assertRedirect(route('login'));
@@ -97,8 +98,14 @@ class TamuFlowTest extends TestCase
         $originalTimestamp = $record->refresh()->tanggal;
 
         $this->actingAs($admin)
-            ->get(route('rekap.index', ['search' => 'Target']))
+            ->getJson(route('rekap.data', [
+                'draw' => 1,
+                'start' => 0,
+                'length' => 25,
+                'search' => ['value' => 'Target', 'regex' => 'false'],
+            ]))
             ->assertOk()
+            ->assertJsonPath('recordsFiltered', 1)
             ->assertSee('Target Filter')
             ->assertDontSee('Nama Lain');
 

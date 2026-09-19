@@ -38,13 +38,13 @@ class DashboardTest extends TestCase
             ->assertViewHas('totalCount', 3)
             ->assertViewHas('trend', fn ($trend) => $trend->count() === 7 && $trend->sum('total') === 2)
             ->assertSee('Dashboard')
-            ->assertSee('sidebar-link active" href="' . route('dashboard.index'), false)
+            ->assertSee('sidebar-link active" href="'.route('dashboard.index'), false)
             ->assertSee(route('rekap.index'), false)
             ->assertDontSee(route('rekap.export.excel'), false)
             ->assertDontSee(route('rekap.export.pdf'), false);
     }
 
-    public function test_rekap_displays_table_and_exports_without_dashboard_statistics(): void
+    public function test_rekap_displays_datatable_shell_and_exports_without_dashboard_statistics(): void
     {
         $admin = User::factory()->create();
         $this->makeTamuAt(now(), 'Pengunjung Rekap');
@@ -54,8 +54,12 @@ class DashboardTest extends TestCase
             ->assertOk()
             ->assertViewIs('admin.rekap')
             ->assertSee('Rekap Kunjungan')
-            ->assertSee('sidebar-link active" href="' . route('rekap.index'), false)
-            ->assertSee('Pengunjung Rekap')
+            ->assertSee('sidebar-link active" href="'.route('rekap.index'), false)
+            ->assertSee(route('rekap.data'), false)
+            ->assertSee('assets/libs/datatables/dataTables.bootstrap5.min.css', false)
+            ->assertSee('assets/libs/datatables/jquery.dataTables.min.js', false)
+            ->assertDontSee('Pengunjung Rekap')
+            ->assertDontSee('Kontak')
             ->assertSee(route('rekap.export.excel'), false)
             ->assertSee(route('rekap.export.pdf'), false)
             ->assertDontSee('Tren 7 hari')
@@ -75,6 +79,7 @@ class DashboardTest extends TestCase
             ->get(route('tamu.index'))
             ->assertRedirect('/rekap');
     }
+
     private function makeTamuAt(Carbon $date, string $name = 'Tamu Statistik'): Tamu
     {
         $tamu = Tamu::create([

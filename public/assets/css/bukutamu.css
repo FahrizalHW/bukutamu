@@ -783,3 +783,102 @@ h1, h2, h3, h4, h5, h6 {
   .detail-list > div { grid-template-columns: 1fr; gap: 4px; }
   .admin-content { padding-top: 88px; }
 }
+
+/* Rekap server-side DataTable */
+.rekap-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr)) auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.rekap-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+#visitor-table_wrapper .row {
+  row-gap: 12px;
+  align-items: center;
+}
+
+#visitor-table_wrapper .dataTables_filter input,
+#visitor-table_wrapper .dataTables_length select {
+  border-color: #dce5ff;
+}
+
+#visitor-table_wrapper .dataTables_filter input:focus,
+#visitor-table_wrapper .dataTables_length select:focus {
+  border-color: #5D87FF;
+  box-shadow: 0 0 0 .2rem rgba(93, 135, 255, .16) !important;
+}
+
+#visitor-table_wrapper .page-item.active .page-link {
+  background-color: #5D87FF;
+  border-color: #5D87FF;
+}
+
+.action-buttons .btn {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid transparent;
+}
+
+.action-buttons .btn i {
+  font-size: 18px;
+}
+
+.action-button-primary {
+  color: #5D87FF;
+  background: #edf2ff;
+  border-color: #dce5ff !important;
+}
+
+.action-button-primary:hover,
+.action-button-primary:focus {
+  color: #fff;
+  background: #5D87FF;
+}
+
+.action-button-danger {
+  color: #dc3545;
+  background: #fff1f2;
+  border-color: #ffd8dc !important;
+}
+
+.action-button-danger:hover,
+.action-button-danger:focus {
+  color: #fff;
+  background: #dc3545;
+}
+
+@media (max-width: 900px) {
+  .rekap-filter-grid {
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .rekap-filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rekap-filter-grid .filter-actions,
+  .rekap-filter-grid .filter-actions .btn {
+    width: 100%;
+  }
+
+  #visitor-table_wrapper > .row:first-child > div,
+  #visitor-table_wrapper > .row:last-child > div {
+    text-align: left !important;
+  }
+
+  #visitor-table_wrapper .dataTables_filter label,
+  #visitor-table_wrapper .dataTables_filter input {
+    width: 100%;
+    margin-left: 0;
+  }
+}

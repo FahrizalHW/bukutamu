@@ -36,6 +36,7 @@ Route::middleware(['auth', 'superadmin'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::get('/rekap', [RekapController::class, 'index'])->name('rekap.index');
+    Route::get('/rekap/data', [RekapController::class, 'data'])->name('rekap.data');
     Route::get('/rekap/filter', [RekapController::class, 'index'])->name('rekap.filter');
     Route::get('/rekap/export/excel', [RekapController::class, 'exportExcel'])->name('rekap.export.excel');
     Route::get('/rekap/export/pdf', [RekapController::class, 'exportPdf'])->name('rekap.export.pdf');
