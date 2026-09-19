@@ -15,6 +15,10 @@ class AuthProfileTest extends TestCase
     {
         $this->get(route('login'))
             ->assertOk()
+            ->assertSee('SMK Negeri 4 Tanjungpinang')
+            ->assertSee('<h1 class="auth-title">Buku Tamu Digital</h1>', false)
+            ->assertSee('<h4 class="auth-subtitle mb-4">Login</h4>', false)
+            ->assertDontSee('Login Buku Tamu')
             ->assertSee('data-password-toggle="password"', false)
             ->assertSee('ti ti-eye', false)
             ->assertSee('assets/js/password-toggle.js', false);

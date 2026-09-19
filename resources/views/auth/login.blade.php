@@ -11,12 +11,12 @@
 <body class="auth-body">
   <main class="auth-shell">
     <section class="auth-panel">
-      <a href="{{ route('home') }}" class="d-inline-flex align-items-center gap-2 text-decoration-none mb-4">
+      <a href="{{ route('home') }}" class="auth-brand d-inline-flex align-items-center gap-2 text-decoration-none mb-4">
         <img src="{{ asset('assets/images/logos/smkn4tpi.png') }}" width="52" height="52" alt="Logo SMKN 4">
-        <span class="fw-bold text-dark">Buku Tamu</span>
+        <span class="fw-bold text-dark">SMK Negeri 4 Tanjungpinang</span>
       </a>
-      <h1 class="auth-title">Login Buku Tamu</h1>
-      <p class="text-muted mb-4">SMKN 4 Tanjungpinang</p>
+      <h1 class="auth-title">Buku Tamu Digital</h1>
+      <h4 class="auth-subtitle mb-4">Login</h4>
 
       @if(session('error'))
         <div class="alert alert-danger">{{ session('error') }}</div>
