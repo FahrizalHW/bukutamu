@@ -13,6 +13,12 @@ class AuthProfileTest extends TestCase
 
     public function test_login_logout_and_registration_surface(): void
     {
+        $this->get(route('login'))
+            ->assertOk()
+            ->assertSee('data-password-toggle="password"', false)
+            ->assertSee('ti ti-eye', false)
+            ->assertSee('assets/js/password-toggle.js', false);
+
         $admin = User::factory()->create([
             'username' => 'admin',
             'password' => 'password123',
@@ -113,9 +119,20 @@ class AuthProfileTest extends TestCase
             ->assertSee('<span class="user-initials" aria-hidden="true">AD</span>', false)
             ->assertSee('Admin Digital')
             ->assertSee(route('profile.edit'), false)
+            ->assertDontSee('ti-user-cog', false)
             ->assertSee('Keluar')
             ->assertDontSee('Superadmin')
             ->assertDontSee('user-1.jpg');
+
+        $this->actingAs($admin)
+            ->get(route('profile.edit'))
+            ->assertOk()
+            ->assertSee('Administrasi')
+            ->assertSee('<h1>Profil Admin</h1>', false)
+            ->assertSee('data-password-toggle="password"', false)
+            ->assertSee('data-password-toggle="password_confirmation"', false)
+            ->assertSee('assets/js/password-toggle.js', false)
+            ->assertDontSee('ti-user-cog', false);
 
         $admin->update(['full_name' => null, 'username' => 'operator']);
 

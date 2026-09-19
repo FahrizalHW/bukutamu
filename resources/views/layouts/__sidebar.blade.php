@@ -22,11 +22,6 @@
             <i class="ti ti-list-details"></i><span class="hide-menu">Rekap</span>
           </a>
         </li>
-        <li class="sidebar-item">
-          <a class="sidebar-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profile.edit') }}">
-            <i class="ti ti-user-cog"></i><span class="hide-menu">Profil</span>
-          </a>
-        </li>
         <li class="nav-small-cap"><span class="hide-menu">KIOS</span></li>
         <li class="sidebar-item">
           <a class="sidebar-link" href="{{ route('tamu.create') }}" target="_blank">

@@ -33,10 +33,16 @@
         </div>
         <div class="mb-4">
           <label for="password" class="form-label">Password</label>
-          <input id="password" type="password" name="password"
-            class="form-control @error('password') is-invalid @enderror"
-            autocomplete="current-password" required>
-          @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
+          <div class="password-field">
+            <input id="password" type="password" name="password"
+              class="form-control @error('password') is-invalid @enderror"
+              autocomplete="current-password" required>
+            <button type="button" class="password-toggle-button" data-password-toggle="password"
+              aria-label="Tampilkan password" aria-controls="password" aria-pressed="false" title="Tampilkan password">
+              <i class="ti ti-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+          @error('password')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
         </div>
         <button type="submit" class="btn btn-primary w-100">
           <i class="ti ti-login me-2"></i>Masuk
@@ -45,5 +51,6 @@
     </section>
   </main>
   <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('assets/js/password-toggle.js') }}"></script>
 </body>
 </html>

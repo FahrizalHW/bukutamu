@@ -19,7 +19,7 @@
     <div><span>Hari ini</span><strong>{{ number_format($todayCount) }}</strong></div>
   </article>
   <article class="stat-card stat-primary-soft">
-    <i class="ti ti-calendar-month"></i>
+    <i class="ti ti-calendar-stats"></i>
     <div><span>Bulan ini</span><strong>{{ number_format($monthCount) }}</strong></div>
   </article>
   <article class="stat-card stat-primary-neutral">
