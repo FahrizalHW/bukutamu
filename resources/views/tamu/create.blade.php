@@ -58,9 +58,14 @@
         </div>
       </div>
       <input type="hidden" name="gambar" id="gambar" value="{{ old('gambar') }}">
-      <button type="button" id="capture-button" class="btn btn-primary">
-        <i class="ti ti-camera me-2"></i>Ambil Foto
-      </button>
+      <div class="camera-actions">
+        <button type="button" id="capture-button" class="btn btn-primary">
+          <i class="ti ti-camera me-2"></i>Ambil Foto
+        </button>
+        <button type="button" id="reset-camera-button" class="btn btn-outline-primary d-none">
+          <i class="ti ti-refresh me-2"></i>Ambil Ulang
+        </button>
+      </div>
       @error('gambar')<div class="text-danger small mt-2">{{ $message }}</div>@enderror
     </section>
 
@@ -133,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const result = document.getElementById('results');
   const status = document.getElementById('camera-status');
   const captureButton = document.getElementById('capture-button');
+  const resetCameraButton = document.getElementById('reset-camera-button');
   const submitButton = document.getElementById('submit-button');
   const cameraStage = document.querySelector('.camera-stage');
   const measuredWidth = Math.round(cameraStage.getBoundingClientRect().width);
@@ -165,12 +171,63 @@ document.addEventListener('DOMContentLoaded', function () {
   Webcam.attach('#my_camera');
 
   captureButton.addEventListener('click', function () {
-    Webcam.snap(function (dataUri) {
-      imageInput.value = dataUri;
-      result.innerHTML = '<img src="' + dataUri + '" alt="Foto pengunjung">';
-      status.className = 'badge bg-primary';
-      status.textContent = 'Foto siap';
-    });
+    const video = document.querySelector('#my_camera video');
+
+    if (!video || !video.videoWidth || !video.videoHeight) {
+      status.className = 'badge bg-danger';
+      status.textContent = 'Kamera belum siap';
+      return;
+    }
+
+    const outputWidth = 960;
+    const outputHeight = 720;
+    const outputRatio = outputWidth / outputHeight;
+    const sourceRatio = video.videoWidth / video.videoHeight;
+    let sourceWidth = video.videoWidth;
+    let sourceHeight = video.videoHeight;
+    let sourceX = 0;
+    let sourceY = 0;
+
+    if (sourceRatio > outputRatio) {
+      sourceWidth = video.videoHeight * outputRatio;
+      sourceX = (video.videoWidth - sourceWidth) / 2;
+    } else {
+      sourceHeight = video.videoWidth / outputRatio;
+      sourceY = (video.videoHeight - sourceHeight) / 2;
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.width = outputWidth;
+    canvas.height = outputHeight;
+    canvas.getContext('2d').drawImage(
+      video,
+      sourceX,
+      sourceY,
+      sourceWidth,
+      sourceHeight,
+      0,
+      0,
+      outputWidth,
+      outputHeight
+    );
+
+    const dataUri = canvas.toDataURL('image/jpeg', 0.9);
+    imageInput.value = dataUri;
+    result.innerHTML = '<img src="' + dataUri + '" alt="Foto pengunjung">';
+    status.className = 'badge bg-primary';
+    status.textContent = 'Foto siap';
+    captureButton.classList.add('d-none');
+    resetCameraButton.classList.remove('d-none');
+  });
+
+  resetCameraButton.addEventListener('click', function () {
+    imageInput.value = '';
+    result.innerHTML = '<i class="ti ti-camera fs-8 text-muted"></i><span>Foto belum diambil</span>';
+    status.className = 'badge bg-primary';
+    status.textContent = 'Kamera siap';
+    resetCameraButton.classList.add('d-none');
+    captureButton.classList.remove('d-none');
+    captureButton.focus();
   });
 
   form.addEventListener('submit', function (event) {

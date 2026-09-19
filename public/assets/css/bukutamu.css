@@ -391,6 +391,11 @@ h1, h2, h3, h4, h5, h6 {
   object-fit: cover;
 }
 
+.camera-actions {
+  display: flex;
+  gap: 10px;
+}
+
 .auth-body {
   min-height: 100vh;
   background: #eaf0ed;
@@ -685,7 +690,8 @@ h1, h2, h3, h4, h5, h6 {
   .camera-panel .section-heading > div { min-width: 0; }
   .camera-panel .section-heading h2 { font-size: 17px; }
   .camera-panel #camera-status { flex: 0 0 auto; }
-  .camera-panel #capture-button { width: 100%; }
+  .camera-actions,
+  .camera-actions .btn { width: 100%; }
   .kiosk-main .form-control,
   .kiosk-main .form-select { min-height: 44px; }
   .filter-grid { grid-template-columns: 1fr; }
