@@ -530,6 +530,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .stat-card > i {
+  color: var(--primary);
   font-size: 30px;
 }
 
@@ -547,9 +548,9 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 28px;
 }
 
-.stat-green { background: var(--green-soft); border-color: #c9e6d5; }
-.stat-blue { background: var(--blue-soft); border-color: #d3e1f3; }
-.stat-amber { background: var(--amber-soft); border-color: #f1ddaf; }
+.stat-primary { background: #e7efff; border-color: #cbdcff; }
+.stat-primary-soft { background: #eef3ff; border-color: #d8e3ff; }
+.stat-primary-neutral { background: #f7f9ff; border-color: #e3e9f7; }
 
 .dashboard-band {
   margin-bottom: 20px;
@@ -587,7 +588,7 @@ h1, h2, h3, h4, h5, h6 {
 .trend-bar {
   width: min(42px, 75%);
   min-height: 4px;
-  background: var(--green);
+  background: var(--primary);
   border-radius: 4px 4px 0 0;
 }
 

@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="page-heading">
-  <p class="text-success fw-semibold mb-1">Akun</p>
+  <p class="text-primary fw-semibold mb-1">Akun</p>
   <h1>Profil admin</h1>
 </div>
 

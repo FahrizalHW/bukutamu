@@ -5,7 +5,7 @@
 @section('content')
 <div class="page-heading d-flex justify-content-between align-items-center gap-3">
   <div>
-    <p class="text-success fw-semibold mb-1">Data kunjungan</p>
+    <p class="text-primary fw-semibold mb-1">Data kunjungan</p>
     <h1>Detail pengunjung</h1>
   </div>
   <div class="d-flex gap-2">

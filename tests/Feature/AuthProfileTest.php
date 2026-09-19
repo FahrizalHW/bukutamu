@@ -21,7 +21,7 @@ class AuthProfileTest extends TestCase
         $this->post(route('login.store'), [
             'username' => 'admin',
             'password' => 'password123',
-        ])->assertRedirect(route('rekap.index'));
+        ])->assertRedirect(route('dashboard.index'));
 
         $this->assertAuthenticatedAs($admin);
 
@@ -35,10 +35,12 @@ class AuthProfileTest extends TestCase
 
     public function test_admin_pages_require_superadmin(): void
     {
+        $this->get(route('dashboard.index'))->assertRedirect(route('login'));
         $this->get(route('rekap.index'))->assertRedirect(route('login'));
         $this->get(route('profile.edit'))->assertRedirect(route('login'));
 
         $operator = User::factory()->create(['role' => 'operator']);
+        $this->actingAs($operator)->get(route('dashboard.index'))->assertForbidden();
         $this->actingAs($operator)->get(route('rekap.index'))->assertForbidden();
     }
 
@@ -106,7 +108,7 @@ class AuthProfileTest extends TestCase
         ]);
 
         $this->actingAs($admin)
-            ->get(route('rekap.index'))
+            ->get(route('dashboard.index'))
             ->assertOk()
             ->assertSee('<span class="user-initials" aria-hidden="true">AD</span>', false)
             ->assertSee('Admin Digital')
@@ -118,8 +120,9 @@ class AuthProfileTest extends TestCase
         $admin->update(['full_name' => null, 'username' => 'operator']);
 
         $this->actingAs($admin->fresh())
-            ->get(route('rekap.index'))
+            ->get(route('dashboard.index'))
             ->assertOk()
             ->assertSee('<span class="user-initials" aria-hidden="true">O</span>', false)
             ->assertSee('operator');
-    }}
+    }
+}

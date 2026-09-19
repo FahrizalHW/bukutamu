@@ -78,6 +78,7 @@ class TamuFlowTest extends TestCase
     {
         $record = $this->makeTamu();
 
+        $this->get(route('dashboard.index'))->assertRedirect(route('login'));
         $this->get(route('rekap.index'))->assertRedirect(route('login'));
         $this->get(route('rekap.show', $record))->assertRedirect(route('login'));
         $this->get(route('rekap.photo', $record))->assertRedirect(route('login'));

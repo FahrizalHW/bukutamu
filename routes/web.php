@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekapController;
@@ -28,6 +29,8 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 Route::middleware(['auth', 'superadmin'])->group(function () {
     Route::redirect('/daftar-tamu', '/rekap')->name('tamu.index');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

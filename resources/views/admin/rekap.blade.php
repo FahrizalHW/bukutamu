@@ -1,58 +1,22 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard & Rekap')
+@section('title', 'Rekap Kunjungan')
 
 @section('content')
 <div class="page-heading d-flex flex-wrap justify-content-between align-items-center gap-3">
   <div>
-    <p class="text-success fw-semibold mb-1">Administrasi</p>
-    <h1>Dashboard & Rekap</h1>
+    <p class="text-primary fw-semibold mb-1">Administrasi</p>
+    <h1>Rekap Kunjungan</h1>
   </div>
-  <div class="d-flex gap-2">
-    <a href="{{ route('rekap.export.excel', request()->query()) }}" class="btn btn-outline-success">
+  <div class="d-flex flex-wrap gap-2">
+    <a href="{{ route('rekap.export.excel', request()->query()) }}" class="btn btn-outline-primary">
       <i class="ti ti-file-spreadsheet me-1"></i>Excel
     </a>
-    <a href="{{ route('rekap.export.pdf', request()->query()) }}" class="btn btn-outline-danger">
+    <a href="{{ route('rekap.export.pdf', request()->query()) }}" class="btn btn-outline-primary">
       <i class="ti ti-file-type-pdf me-1"></i>PDF
     </a>
   </div>
 </div>
-
-<div class="stats-grid">
-  <article class="stat-card stat-green">
-    <i class="ti ti-calendar-event"></i>
-    <div><span>Hari ini</span><strong>{{ number_format($todayCount) }}</strong></div>
-  </article>
-  <article class="stat-card stat-blue">
-    <i class="ti ti-calendar-month"></i>
-    <div><span>Bulan ini</span><strong>{{ number_format($monthCount) }}</strong></div>
-  </article>
-  <article class="stat-card stat-amber">
-    <i class="ti ti-users"></i>
-    <div><span>Total kunjungan</span><strong>{{ number_format($totalCount) }}</strong></div>
-  </article>
-</div>
-
-<section class="dashboard-band">
-  <div class="band-heading">
-    <div>
-      <h2>Tren 7 hari</h2>
-      <p class="text-muted mb-0">Jumlah kunjungan per hari</p>
-    </div>
-  </div>
-  @php($trendMax = max(1, $trend->max('total')))
-  <div class="trend-chart" aria-label="Grafik tren kunjungan tujuh hari">
-    @foreach($trend as $point)
-      <div class="trend-item">
-        <span class="trend-value">{{ $point['total'] }}</span>
-        <div class="trend-track">
-          <div class="trend-bar" style="height: {{ max(4, ($point['total'] / $trendMax) * 100) }}%"></div>
-        </div>
-        <span class="trend-label">{{ $point['label'] }}</span>
-      </div>
-    @endforeach
-  </div>
-</section>
 
 <section class="dashboard-band">
   <div class="band-heading">

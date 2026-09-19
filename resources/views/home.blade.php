@@ -21,7 +21,7 @@
       </a>
 
       @auth
-        <a href="{{ route('rekap.index') }}" class="home-admin-link">
+        <a href="{{ route('dashboard.index') }}" class="home-admin-link">
           <i class="ti ti-layout-dashboard" aria-hidden="true"></i>
           <span>Dashboard</span>
         </a>

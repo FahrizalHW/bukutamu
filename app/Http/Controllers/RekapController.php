@@ -32,33 +32,7 @@ class RekapController extends Controller
             ->paginate($perPage)
             ->withQueryString();
 
-        $trendStart = now()->subDays(6)->startOfDay();
-        $trendCounts = Tamu::query()
-            ->where('tanggal', '>=', $trendStart)
-            ->selectRaw('DATE(tanggal) as visit_date, COUNT(*) as total')
-            ->groupBy('visit_date')
-            ->pluck('total', 'visit_date');
-
-        $trend = collect(range(0, 6))->map(function ($offset) use ($trendStart, $trendCounts) {
-            $date = $trendStart->copy()->addDays($offset);
-
-            return [
-                'label' => $date->format('d/m'),
-                'total' => (int) ($trendCounts[$date->toDateString()] ?? 0),
-            ];
-        });
-
-        return view('admin.index', [
-            'visitor' => $visitor,
-            'filters' => $filters,
-            'perPage' => $perPage,
-            'todayCount' => Tamu::whereDate('tanggal', today())->count(),
-            'monthCount' => Tamu::whereYear('tanggal', now()->year)
-                ->whereMonth('tanggal', now()->month)
-                ->count(),
-            'totalCount' => Tamu::count(),
-            'trend' => $trend,
-        ]);
+        return view('admin.rekap', compact('visitor', 'filters', 'perPage'));
     }
 
     public function show(Tamu $tamu): View

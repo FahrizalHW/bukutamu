@@ -1,7 +1,7 @@
 <aside class="left-sidebar">
   <div>
     <div class="brand-logo d-flex align-items-center justify-content-between">
-      <a href="{{ route('rekap.index') }}" class="d-flex align-items-center gap-2 text-decoration-none">
+      <a href="{{ route('dashboard.index') }}" class="d-flex align-items-center gap-2 text-decoration-none">
         <img src="{{ asset('assets/images/logos/smkn4tpi.png') }}" width="42" height="42" alt="Logo SMKN 4">
         <span class="fw-bold text-dark">Buku Tamu</span>
       </a>
@@ -13,8 +13,13 @@
       <ul id="sidebarnav">
         <li class="nav-small-cap"><span class="hide-menu">PENGELOLAAN</span></li>
         <li class="sidebar-item">
+          <a class="sidebar-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}" href="{{ route('dashboard.index') }}">
+            <i class="ti ti-layout-dashboard"></i><span class="hide-menu">Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
           <a class="sidebar-link {{ request()->routeIs('rekap.*') ? 'active' : '' }}" href="{{ route('rekap.index') }}">
-            <i class="ti ti-layout-dashboard"></i><span class="hide-menu">Dashboard & Rekap</span>
+            <i class="ti ti-list-details"></i><span class="hide-menu">Rekap</span>
           </a>
         </li>
         <li class="sidebar-item">

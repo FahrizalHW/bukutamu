@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="page-heading">
-  <p class="text-success fw-semibold mb-1">Data kunjungan</p>
+  <p class="text-primary fw-semibold mb-1">Data kunjungan</p>
   <h1>Edit pengunjung</h1>
 </div>
 
