@@ -48,7 +48,7 @@ Aplikasi buku tamu berbasis Laravel 10 untuk mencatat kunjungan melalui perangka
 
    GUEST_NAME="Tamu"
    GUEST_USERNAME=tamu
-   GUEST_PASSWORD="tamu@SMKN4"
+   GUEST_PASSWORD="password-tamu"
    ```
 
    Gunakan password yang sesuai kebijakan keamanan pada environment produksi.
