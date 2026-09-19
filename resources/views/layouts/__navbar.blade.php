@@ -1,3 +1,12 @@
+@php
+  $userName = auth()->user()->full_name ?: auth()->user()->username;
+  $userInitials = collect(preg_split('/\s+/', trim($userName)))
+    ->filter()
+    ->take(2)
+    ->map(fn ($part) => mb_strtoupper(mb_substr($part, 0, 1)))
+    ->implode('');
+@endphp
+
 <header class="app-header">
   <nav class="navbar navbar-expand-lg navbar-light">
     <button class="btn nav-icon-hover d-xl-none" id="headerCollapse" type="button" aria-label="Buka navigasi">
@@ -6,14 +15,13 @@
     <div class="navbar-collapse justify-content-end px-0">
       <ul class="navbar-nav flex-row ms-auto align-items-center">
         <li class="nav-item me-3 text-end d-none d-sm-block">
-          <strong class="d-block">{{ auth()->user()->full_name ?: auth()->user()->username }}</strong>
+          <strong class="d-block">{{ $userName }}</strong>
           <span class="text-muted small">Superadmin</span>
         </li>
         <li class="nav-item dropdown">
           <button class="btn nav-icon-hover p-0 border-0" data-bs-toggle="dropdown" aria-expanded="false"
             aria-label="Menu akun">
-            <img src="{{ asset('assets/images/profile/user-1.jpg') }}" alt="" width="38" height="38"
-              class="rounded-circle">
+            <span class="user-initials" aria-hidden="true">{{ $userInitials }}</span>
           </button>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up">
             <div class="message-body">

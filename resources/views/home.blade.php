@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Buku Tamu SMKN 4 Tanjungpinang')
+@section('title', 'Buku Tamu Digital SMKN 4 Tanjungpinang')
 
 @php
   $heroImage = 'assets/images/backgrounds/smkn4-tanjungpinang-hero.png';
@@ -10,12 +10,12 @@
 <div class="home-page">
   <header class="public-nav">
     <div class="home-nav-inner">
-      <a href="{{ route('home') }}" class="public-brand" aria-label="Buku Tamu SMKN 4 Tanjungpinang">
+      <a href="{{ route('home') }}" class="public-brand" aria-label="Buku Tamu Digital SMKN 4 Tanjungpinang">
         <span class="public-brand-mark">
           <img src="{{ asset('assets/images/logos/smkn4tpi.png') }}" alt="" width="46" height="46">
         </span>
         <span class="public-brand-copy">
-          <strong>Buku Tamu</strong>
+          <strong>Buku Tamu Digital</strong>
           <small>SMKN 4 Tanjungpinang</small>
         </span>
       </a>
