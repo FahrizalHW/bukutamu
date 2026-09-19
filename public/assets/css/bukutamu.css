@@ -302,11 +302,22 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: 8px;
+  gap: 18px;
 }
 
-.kiosk-header-actions form {
-  margin: 0;
+.kiosk-header-link {
+  padding: 6px 0;
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.kiosk-header-link:hover,
+.kiosk-header-link:focus-visible {
+  color: var(--primary-dark);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .kiosk-main {

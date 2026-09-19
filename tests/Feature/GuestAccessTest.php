@@ -97,9 +97,9 @@ class GuestAccessTest extends TestCase
         $this->actingAs($guest)
             ->get(route('tamu.create'))
             ->assertOk()
-            ->assertSee('Beranda')
-            ->assertSee('Keluar')
-            ->assertSee(route('logout'), false);
+            ->assertSee('<a href="'.route('home').'" class="kiosk-header-link">Beranda</a>', false)
+            ->assertSee('<a href="'.route('logout').'" class="kiosk-header-link"', false)
+            ->assertSee('id="guest-logout-form"', false);
 
         $this->actingAs($guest)
             ->post(route('logout'))
