@@ -1,36 +1,39 @@
 @extends('layouts.base')
 
+@section('title', 'Buku Tamu SMKN 4 Tanjungpinang')
+
 @section('content')
-<header>
-  <a href="" class="brand">Buku Tamu</a>
-  <div class="menu-btn" onclick="toggleMenu()">☰</div> <!-- Tombol menu -->
-  <div class="navigation">
-    <div class="navigation-item">
+<div class="home-shell">
+  <header class="public-nav">
+    <a href="{{ route('home') }}" class="public-brand">
+      <img src="{{ asset('assets/images/logos/smkn4tpi.png') }}" alt="Logo SMKN 4" width="44" height="44">
+      <span>Buku Tamu</span>
+    </a>
+    <nav class="d-flex align-items-center gap-2">
       @auth
-        <a href="/Admin">Admin</a>
+        <a href="{{ route('rekap.index') }}" class="btn btn-light btn-sm">
+          <i class="ti ti-layout-dashboard me-1"></i>Admin
+        </a>
       @else
-        <a href="/login">Login</a>
+        <a href="{{ route('login') }}" class="btn btn-outline-light btn-sm">
+          <i class="ti ti-login me-1"></i>Login
+        </a>
       @endauth
-      <a href="{{ route('tamu.index') }}">Daftar Tamu</a>
-    </div>
-  </div>
-</header>
+    </nav>
+  </header>
 
-  <section class="home">
-    <img src="assetsform/img/empty-classroom-due-coronavirus-pandemic.png" alt="" class="imaged">
-    <div class="content active">
-      <h1>SMKN 4 <span>TPI</span></h1>
-      <p>SMKN 4 Tanjungpinang Timur adalah sekolah menengah kejuruan yang terletak di bagian timur Kota Tanjungpinang, menyediakan berbagai program keahlian untuk persiapan karier siswa</p>
-      <a href="/form-tamu">Selanjutnya</a>
-    <div class="media-icons">
-      <a href="https://www.instagram.com/smkn4tgpinang/"><i class="fab fa-instagram"></i></a>
+  <main class="home-hero">
+    <img src="{{ asset('assetsform/img/empty-classroom-due-coronavirus-pandemic.jpg') }}"
+      alt="Ruang kelas SMKN 4 Tanjungpinang" class="home-hero-image">
+    <div class="home-overlay"></div>
+    <div class="home-copy">
+      <p class="home-kicker">Selamat datang di</p>
+      <h1>SMKN 4 Tanjungpinang</h1>
+      <p>Silakan catat kunjungan Anda melalui buku tamu digital sekolah.</p>
+      <a href="{{ route('tamu.create') }}" class="btn btn-success btn-lg">
+        <i class="ti ti-user-plus me-2"></i>Isi Buku Tamu
+      </a>
     </div>
-    <script>
-
-      function toggleMenu() {
-        var navigation = document.querySelector('.navigation');
-        navigation.classList.toggle('active');
-      }
-    </script>
-  </section>
-  @endsection
+  </main>
+</div>
+@endsection
