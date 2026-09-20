@@ -15,11 +15,12 @@
     <div class="navbar-collapse justify-content-end px-0">
       <ul class="navbar-nav flex-row ms-auto align-items-center">
         <li class="nav-item dropdown account-menu">
-          <button class="btn account-menu-trigger p-0 border-0" data-bs-toggle="dropdown" aria-expanded="false"
-            aria-label="Menu akun">
+          <button class="btn account-menu-trigger p-0 border-0" data-bs-toggle="dropdown" data-bs-display="static"
+            aria-expanded="false" aria-controls="account-dropdown-menu" aria-label="Menu akun">
             <span class="user-initials" aria-hidden="true">{{ $userInitials }}</span>
           </button>
-          <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up account-dropdown">
+          <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up account-dropdown"
+            id="account-dropdown-menu">
             <a href="{{ route('profile.edit') }}" class="account-summary dropdown-item">
               <span class="user-initials" aria-hidden="true">{{ $userInitials }}</span>
               <span class="account-name">{{ $userName }}</span>

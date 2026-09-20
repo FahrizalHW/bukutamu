@@ -778,6 +778,36 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 700px) {
+  .app-header {
+    padding-inline: 14px;
+  }
+
+  .app-header .navbar-collapse {
+    display: flex !important;
+    flex-basis: auto;
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  .app-header .navbar-nav {
+    margin-left: auto !important;
+  }
+
+  .app-header .navbar-nav .nav-item.account-menu {
+    position: static;
+  }
+
+  .app-header .account-dropdown {
+    position: fixed !important;
+    top: 78px !important;
+    right: 12px !important;
+    left: auto !important;
+    width: min(320px, calc(100vw - 24px));
+    max-width: calc(100vw - 24px);
+    margin-top: 0 !important;
+    transform: none !important;
+  }
+
   .home-overlay {
     background:
       linear-gradient(90deg, rgba(4, 10, 24, .74) 0%, rgba(4, 10, 24, .58) 58%, rgba(4, 10, 24, .34) 100%),
