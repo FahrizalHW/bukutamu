@@ -9,7 +9,7 @@ class User extends Authenticatable {
   use HasFactory;
 
   public const ROLE_SUPERADMIN = 'superadmin';
-  public const ROLE_GUEST = 'guest';
+  public const ROLE_OPERATOR = 'operator';
 
   protected $fillable = [
     'full_name',

@@ -7,12 +7,12 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureGuestbookAccess
+class EnsureReceptionAccess
 {
     public function handle(Request $request, Closure $next): Response
     {
         abort_unless(
-            in_array($request->user()?->role, [User::ROLE_GUEST, User::ROLE_SUPERADMIN], true),
+            in_array($request->user()?->role, [User::ROLE_OPERATOR, User::ROLE_SUPERADMIN], true),
             403
         );
 

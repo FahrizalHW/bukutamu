@@ -21,10 +21,10 @@
       </a>
 
       @auth
-        @if(auth()->user()->role === \App\Models\User::ROLE_GUEST)
-          <a href="{{ route('tamu.create') }}" class="home-admin-link">
-            <i class="ti ti-user-plus" aria-hidden="true"></i>
-            <span>Form Tamu</span>
+        @if(auth()->user()->role === \App\Models\User::ROLE_OPERATOR)
+          <a href="{{ route('reception.index') }}" class="home-admin-link">
+            <i class="ti ti-users" aria-hidden="true"></i>
+            <span>Penerimaan</span>
           </a>
         @elseif(auth()->user()->role === \App\Models\User::ROLE_SUPERADMIN)
           <a href="{{ route('dashboard.index') }}" class="home-admin-link">
@@ -35,7 +35,7 @@
       @else
         <a href="{{ route('login') }}" class="home-admin-link">
           <i class="ti ti-user-shield" aria-hidden="true"></i>
-          <span>Admin</span>
+          <span>Masuk Petugas</span>
         </a>
       @endauth
     </div>
@@ -49,10 +49,10 @@
 
     <section class="home-copy" aria-labelledby="home-title">
       <h1 id="home-title">Buku Tamu Digital</h1>
-      <p class="home-intro">Selamat datang. Silakan catat kunjungan Anda untuk membantu kami memberikan pelayanan yang lebih baik.</p>
-      <a href="{{ route('tamu.create') }}" class="home-primary-action">
-        <i class="ti ti-user-plus" aria-hidden="true"></i>
-        <span>Isi Buku Tamu</span>
+      <p class="home-intro">Selamat datang. Pengunjung dapat memindai QR yang tersedia di meja penerima untuk mencatat kunjungan.</p>
+      <a href="{{ auth()->check() ? (auth()->user()->role === \App\Models\User::ROLE_SUPERADMIN ? route('dashboard.index') : route('reception.index')) : route('login') }}" class="home-primary-action">
+        <i class="ti ti-login" aria-hidden="true"></i>
+        <span>{{ auth()->check() ? 'Buka Aplikasi' : 'Masuk Petugas' }}</span>
       </a>
     </section>
   </main>

@@ -18,7 +18,7 @@
     <thead>
       <tr>
         <th>Waktu</th><th>Nama</th><th>Jenis Kelamin</th><th>Nomor HP</th>
-        <th>Asal</th><th>Tujuan</th><th>Keterangan</th>
+        <th>Asal</th><th>Tujuan</th><th>Keterangan</th><th>Sumber</th>
       </tr>
     </thead>
     <tbody>
@@ -31,9 +31,10 @@
           <td>{{ $record->asal }}</td>
           <td>{{ $record->tujuan }}</td>
           <td>{{ $record->keterangan ?: '-' }}</td>
+          <td>{{ $record->sumber === 'qr' ? 'QR Mandiri' : 'Kiosk' }}</td>
         </tr>
       @empty
-        <tr><td colspan="7">Tidak ada data sesuai filter.</td></tr>
+        <tr><td colspan="8">Tidak ada data sesuai filter.</td></tr>
       @endforelse
     </tbody>
   </table>

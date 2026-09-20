@@ -1,5 +1,7 @@
 @extends('layouts.base')
 
+@php($isQrMode = ($mode ?? 'kiosk') === 'qr')
+
 @section('title', 'Form Buku Tamu')
 
 @section('content')
@@ -9,11 +11,11 @@
     <span>Buku Tamu SMKN 4</span>
   </a>
   <nav class="kiosk-header-actions" aria-label="Navigasi tamu">
-    <a href="{{ route('home') }}" class="kiosk-header-link">Beranda</a>
-    @if(auth()->user()->role === \App\Models\User::ROLE_GUEST)
+    <a href="{{ auth()->user()?->role === \App\Models\User::ROLE_OPERATOR ? route('reception.index') : route('home') }}" class="kiosk-header-link">{{ auth()->user()?->role === \App\Models\User::ROLE_OPERATOR ? 'Penerimaan' : 'Beranda' }}</a>
+    @if(auth()->user()?->role === \App\Models\User::ROLE_OPERATOR)
       <a href="{{ route('logout') }}" class="kiosk-header-link"
-        onclick="event.preventDefault(); document.getElementById('guest-logout-form').submit();">Keluar</a>
-      <form id="guest-logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        onclick="event.preventDefault(); document.getElementById('operator-logout-form').submit();">Keluar</a>
+      <form id="operator-logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
         @csrf
       </form>
     @endif
@@ -23,11 +25,17 @@
 <main class="kiosk-main">
   <div class="kiosk-heading">
     <div>
-      <p class="kiosk-eyebrow fw-semibold mb-1">Pencatatan kunjungan</p>
-      <h1>Form Buku Tamu</h1>
+      <p class="kiosk-eyebrow fw-semibold mb-1">{{ $isQrMode ? 'Jalur mandiri' : 'Pencatatan kunjungan' }}</p>
+      <h1>{{ $isQrMode ? 'Form Tamu Mandiri' : 'Form Buku Tamu' }}</h1>
     </div>
     <span class="kiosk-date">{{ now()->translatedFormat('d F Y') }}</span>
   </div>
+  @if($isQrMode)
+    <div class="alert alert-primary d-flex align-items-start gap-2" role="status">
+      <i class="ti ti-clock fs-6 mt-1"></i>
+      <span>Form ini dapat diselesaikan sampai <strong>{{ $grantExpiresAt->format('H:i') }}</strong>. QR di meja boleh berubah selama form ini sudah terbuka.</span>
+    </div>
+  @endif
 
   @if(session('success'))
     <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
@@ -47,7 +55,7 @@
     </div>
   @endif
 
-  <form id="guest-form" method="POST" action="{{ route('tamu.store') }}" class="kiosk-form">
+  <form id="guest-form" method="POST" action="{{ $formAction }}" class="kiosk-form">
     @csrf
     <section class="camera-panel" aria-labelledby="camera-title">
       <div class="section-heading">
@@ -73,6 +81,10 @@
           <i class="ti ti-refresh me-2"></i>Ambil Ulang
         </button>
       </div>
+      <button type="button" id="retry-camera-button" class="btn btn-link px-0 d-none">
+        Coba aktifkan kamera kembali
+      </button>
+      <p id="camera-help" class="form-text mb-0">Izinkan akses kamera saat browser meminta izin. Foto tidak dipublikasikan.</p>
       @error('gambar')<div class="text-danger small mt-2">{{ $message }}</div>@enderror
     </section>
 
@@ -146,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const status = document.getElementById('camera-status');
   const captureButton = document.getElementById('capture-button');
   const resetCameraButton = document.getElementById('reset-camera-button');
+  const retryCameraButton = document.getElementById('retry-camera-button');
   const submitButton = document.getElementById('submit-button');
   const cameraStage = document.querySelector('.camera-stage');
   const measuredWidth = Math.round(cameraStage.getBoundingClientRect().width);
@@ -166,16 +179,26 @@ document.addEventListener('DOMContentLoaded', function () {
     status.className = 'badge bg-primary';
     status.textContent = 'Kamera siap';
     captureButton.disabled = false;
+    retryCameraButton.classList.add('d-none');
   });
 
   Webcam.on('error', function () {
     status.className = 'badge bg-danger';
-    status.textContent = 'Kamera tidak tersedia';
+    status.textContent = window.isSecureContext ? 'Izin kamera diperlukan' : 'HTTPS diperlukan';
     captureButton.disabled = true;
+    retryCameraButton.classList.remove('d-none');
   });
 
   captureButton.disabled = true;
   Webcam.attach('#my_camera');
+
+  retryCameraButton.addEventListener('click', function () {
+    status.className = 'badge bg-secondary';
+    status.textContent = 'Menyiapkan kamera';
+    retryCameraButton.classList.add('d-none');
+    Webcam.reset();
+    Webcam.attach('#my_camera');
+  });
 
   captureButton.addEventListener('click', function () {
     const video = document.querySelector('#my_camera video');

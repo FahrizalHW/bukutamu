@@ -28,8 +28,8 @@ class AuthController extends Controller {
     $request->session()->regenerate();
     $user = $request->user();
 
-    if ($user->role === User::ROLE_GUEST) {
-      return redirect()->route('tamu.create');
+    if ($user->role === User::ROLE_OPERATOR) {
+      return redirect()->route('reception.index');
     }
 
     if ($user->role === User::ROLE_SUPERADMIN) {
@@ -52,7 +52,7 @@ class AuthController extends Controller {
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    return $role === User::ROLE_GUEST
+    return $role === User::ROLE_OPERATOR
       ? redirect()->route('home')
       : redirect()->route('login');
   }

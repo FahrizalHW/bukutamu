@@ -12,7 +12,7 @@ class Tamu extends Model {
 
   protected $fillable = [
     'nama_tamu', 'jenis_kelamin', 'asal',
-    'nohp', 'gambar', 'tujuan', 'keterangan',
+    'nohp', 'gambar', 'tujuan', 'keterangan', 'sumber',
   ];
 
   public $timestamps = false;

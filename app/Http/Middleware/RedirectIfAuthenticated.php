@@ -20,7 +20,7 @@ class RedirectIfAuthenticated
             }
 
             return match (Auth::guard($guard)->user()->role) {
-                User::ROLE_GUEST => redirect()->route('tamu.create'),
+                User::ROLE_OPERATOR => redirect()->route('reception.index'),
                 User::ROLE_SUPERADMIN => redirect()->route('dashboard.index'),
                 default => redirect()->route('home'),
             };

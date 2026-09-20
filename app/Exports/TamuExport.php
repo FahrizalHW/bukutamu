@@ -18,7 +18,7 @@ class TamuExport implements FromCollection, ShouldAutoSize, WithHeadings, WithMa
   }
 
   public function headings(): array {
-    return ['Waktu', 'Nama', 'Jenis Kelamin', 'Nomor HP', 'Asal', 'Tujuan', 'Keterangan'];
+    return ['Waktu', 'Nama', 'Jenis Kelamin', 'Nomor HP', 'Asal', 'Tujuan', 'Keterangan', 'Sumber'];
   }
 
   public function map($record): array {
@@ -35,6 +35,7 @@ class TamuExport implements FromCollection, ShouldAutoSize, WithHeadings, WithMa
       $record->asal,
       $record->tujuan,
       $record->keterangan,
+      $record->sumber === 'qr' ? 'QR Mandiri' : 'Kiosk',
     ];
   }
 }

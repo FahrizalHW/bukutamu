@@ -29,6 +29,10 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
+        RateLimiter::for('qr-guestbook', function (Request $request) {
+            return Limit::perMinute(10)->by(hash('sha256', $request->session()->getId()));
+        });
+
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')

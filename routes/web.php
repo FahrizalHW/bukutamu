@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QrGuestbookController;
+use App\Http\Controllers\ReceptionController;
 use App\Http\Controllers\RekapController;
 use App\Http\Controllers\TamuController;
 use Illuminate\Support\Facades\Route;
@@ -11,7 +13,21 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth', 'guestbook'])->group(function () {
+Route::get('/form-tamu/qr', [QrGuestbookController::class, 'enter'])->name('tamu.qr.enter');
+Route::get('/form-tamu/mandiri', [QrGuestbookController::class, 'create'])
+    ->middleware('guestbook.qr')
+    ->name('tamu.qr.form');
+Route::post('/form-tamu/mandiri', [QrGuestbookController::class, 'store'])
+    ->middleware(['guestbook.qr', 'throttle:qr-guestbook'])
+    ->name('tamu.qr.store');
+Route::get('/form-tamu/mandiri/selesai', [QrGuestbookController::class, 'success'])
+    ->name('tamu.qr.success');
+
+Route::middleware(['auth', 'reception'])->group(function () {
+    Route::get('/penerimaan', [ReceptionController::class, 'index'])->name('reception.index');
+    Route::get('/penerimaan/qr', [QrGuestbookController::class, 'display'])->name('reception.qr.index');
+    Route::get('/penerimaan/qr/token', [QrGuestbookController::class, 'token'])->name('reception.qr.token');
+
     Route::get('/form-tamu', [TamuController::class, 'create'])->name('tamu.create');
     Route::post('/form-tamu', [TamuController::class, 'store'])
         ->middleware('throttle:60,1')
@@ -30,6 +46,8 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
 
 Route::middleware(['auth', 'superadmin'])->group(function () {
+    Route::redirect('/admin/qr-tamu', '/penerimaan/qr')->name('admin.qr-tamu.legacy');
+
     Route::redirect('/daftar-tamu', '/rekap')->name('tamu.index');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');

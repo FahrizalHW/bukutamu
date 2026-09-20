@@ -24,6 +24,11 @@
         </li>
         <li class="nav-small-cap"><span class="hide-menu">KIOS</span></li>
         <li class="sidebar-item">
+          <a class="sidebar-link" href="{{ route('reception.index') }}">
+            <i class="ti ti-users"></i><span class="hide-menu">Penerimaan</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
           <a class="sidebar-link" href="{{ route('tamu.create') }}" target="_blank">
             <i class="ti ti-external-link"></i><span class="hide-menu">Buka Form Tamu</span>
           </a>

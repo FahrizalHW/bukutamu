@@ -21,6 +21,7 @@
   <dl class="detail-list">
     <div><dt>Nama</dt><dd>{{ $tamu->nama_tamu }}</dd></div>
     <div><dt>Waktu kunjungan</dt><dd>{{ $tamu->tanggal->format('d-m-Y H:i') }}</dd></div>
+    <div><dt>Sumber pengisian</dt><dd>{{ $tamu->sumber === 'qr' ? 'QR Mandiri' : 'Kiosk' }}</dd></div>
     <div><dt>Jenis kelamin</dt><dd>{{ $tamu->jenis_kelamin === 'L' ? 'Laki-laki' : ($tamu->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}</dd></div>
     <div><dt>Nomor HP</dt><dd>{{ $tamu->nohp }}</dd></div>
     <div><dt>Asal instansi</dt><dd>{{ $tamu->asal }}</dd></div>

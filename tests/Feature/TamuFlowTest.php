@@ -50,17 +50,17 @@ class TamuFlowTest extends TestCase
         ], $overrides));
     }
 
-    public function test_guest_account_can_store_visit_and_remains_authenticated(): void
+    public function test_operator_account_can_store_visit_and_remains_authenticated(): void
     {
         Storage::fake('local');
-        $guest = User::factory()->create(['role' => User::ROLE_GUEST]);
+        $operator = User::factory()->create(['role' => User::ROLE_OPERATOR]);
 
-        $this->actingAs($guest)
+        $this->actingAs($operator)
             ->post(route('tamu.store'), $this->validPayload())
             ->assertRedirect(route('tamu.create'))
             ->assertSessionHas('success');
 
-        $this->assertAuthenticatedAs($guest);
+        $this->assertAuthenticatedAs($operator);
         $record = Tamu::sole();
         Storage::disk('local')->assertExists('visitor-photos/'.$record->gambar);
         $this->assertStringEndsWith('.jpg', $record->gambar);
@@ -69,9 +69,9 @@ class TamuFlowTest extends TestCase
 
     public function test_form_rejects_missing_or_invalid_photo(): void
     {
-        $guest = User::factory()->create(['role' => User::ROLE_GUEST]);
+        $operator = User::factory()->create(['role' => User::ROLE_OPERATOR]);
 
-        $this->actingAs($guest)
+        $this->actingAs($operator)
             ->from(route('tamu.create'))
             ->post(route('tamu.store'), $this->validPayload(['gambar' => 'bukan-gambar']))
             ->assertRedirect(route('tamu.create'))
@@ -80,7 +80,7 @@ class TamuFlowTest extends TestCase
         $this->assertDatabaseCount('tamu', 0);
     }
 
-    public function test_guest_cannot_access_records_or_photos(): void
+    public function test_public_user_cannot_access_records_or_photos(): void
     {
         $record = $this->makeTamu();
 
