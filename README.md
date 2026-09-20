@@ -5,7 +5,8 @@ Aplikasi buku tamu berbasis Laravel 10 untuk mencatat kunjungan melalui perangka
 ## Fitur
 
 - Beranda publik dengan akses menuju Form Tamu dan login.
-- Form Tamu yang dilindungi autentikasi untuk akun `guest` dan `superadmin`.
+- Jalur mandiri melalui QR dinamis 90 detik dengan akses pengisian individual selama 15 menit.
+- Form Tamu berbantuan yang dilindungi autentikasi untuk akun `operator` dan `superadmin`.
 - Pengambilan foto pengunjung melalui kamera perangkat.
 - Dashboard statistik kunjungan harian, bulanan, total, dan tren tujuh hari.
 - Rekap kunjungan menggunakan Yajra DataTables server-side.
@@ -39,16 +40,19 @@ Aplikasi buku tamu berbasis Laravel 10 untuk mencatat kunjungan melalui perangka
    php artisan key:generate
    ```
 
-4. Atur kredensial superadmin dan akun tamu bersama pada `.env`:
+4. Atur kredensial superadmin dan akun operator bersama pada `.env`:
 
    ```dotenv
    ADMIN_NAME="Administrator"
    ADMIN_USERNAME=admin
    ADMIN_PASSWORD="password-admin-yang-kuat"
 
-   GUEST_NAME="Tamu"
-   GUEST_USERNAME=tamu
-   GUEST_PASSWORD="password-tamu"
+   OPERATOR_NAME="Operator"
+   OPERATOR_USERNAME=operator
+   OPERATOR_PASSWORD="password-operator"
+
+   GUESTBOOK_QR_TTL_SECONDS=90
+   GUESTBOOK_GRANT_TTL_MINUTES=15
    ```
 
    Gunakan password yang sesuai kebijakan keamanan pada environment produksi.
@@ -73,13 +77,13 @@ Aplikasi menggunakan guard web yang sama dengan pembatasan berdasarkan role:
 
 | Role | Hak akses |
 | --- | --- |
-| Publik | Beranda dan halaman login |
-| `guest` | Beranda, Form Tamu, dan logout |
-| `superadmin` | Dashboard, Rekap, Profil, Form Tamu, dan logout |
+| Publik | Beranda, halaman login, dan Form Tamu Mandiri melalui QR yang masih berlaku |
+| `operator` | Penerimaan, layar QR dinamis, Form Tamu berbantuan, dan logout |
+| `superadmin` | Dashboard, Rekap, Profil, Penerimaan, layar QR dinamis, Form Tamu, dan logout |
 
-Akun `guest` merupakan akun bersama yang proses loginnya dibantu operator. Setelah data kunjungan disimpan, sesi tetap aktif agar operator tidak perlu login ulang untuk setiap pengunjung.
+Akun `operator` merupakan akun bersama untuk petugas meja penerima. Setelah data kunjungan disimpan, sesi tetap aktif agar operator tidak perlu login ulang untuk setiap pengunjung.
 
-`AdminSeeder` hanya membuat superadmin jika akun dengan role tersebut belum tersedia. `GuestSeeder` menggunakan `updateOrCreate`, sehingga menjalankan seeder kembali tidak membuat akun guest ganda dan akan menyelaraskan nama, role, serta password dengan konfigurasi `.env`.
+`AdminSeeder` hanya membuat superadmin jika akun dengan role tersebut belum tersedia. `OperatorSeeder` menggunakan akun operator yang sudah ada bila tersedia, sehingga perubahan username tidak membuat akun operator ganda. Variabel `GUEST_*` lama tetap menjadi fallback selama masa transisi deployment.
 
 ## Route Utama
 
@@ -87,12 +91,15 @@ Akun `guest` merupakan akun bersama yang proses loginnya dibantu operator. Setel
 | --- | --- | --- |
 | Beranda | `/home` | Publik |
 | Login | `/auth/login` | Publik |
-| Form Tamu | `/form-tamu` | Guest dan superadmin |
+| Form Tamu berbantuan | `/form-tamu` | Operator dan superadmin |
+| Form Tamu Mandiri | `/form-tamu/mandiri` | Pemegang grant dari QR |
+| Penerimaan | `/penerimaan` | Operator dan superadmin |
+| Layar QR Tamu | `/penerimaan/qr` | Operator dan superadmin |
 | Dashboard | `/dashboard` | Superadmin |
 | Rekap | `/rekap` | Superadmin |
 | Profil | `/profile` | Superadmin |
 
-Setelah login, akun guest diarahkan ke Form Tamu dan superadmin diarahkan ke Dashboard. Route lama `/daftar-tamu` tetap dialihkan ke `/rekap`.
+Setelah login, operator diarahkan ke Penerimaan dan superadmin diarahkan ke Dashboard. URL lama `/admin/qr-tamu` dialihkan ke `/penerimaan/qr` khusus superadmin, sedangkan `/daftar-tamu` tetap dialihkan ke `/rekap`.
 
 ## Rekap dan Ekspor
 
@@ -136,7 +143,7 @@ php artisan migrate:status
 
 ## Deployment Produksi
 
-Pastikan konfigurasi `APP_URL`, database, kredensial admin, dan kredensial guest telah diisi. Gunakan `APP_ENV=production` dan `APP_DEBUG=false`, lalu jalankan:
+Pastikan konfigurasi `APP_URL`, database, kredensial admin, dan kredensial operator telah diisi. Gunakan `APP_ENV=production` dan `APP_DEBUG=false`, lalu jalankan:
 
 ```bash
 composer install --no-dev --optimize-autoloader
@@ -148,10 +155,14 @@ php artisan route:cache
 php artisan view:cache
 ```
 
-Untuk deployment lama yang hanya perlu menambahkan atau memperbarui akun guest, seeder dapat dijalankan secara khusus:
+Aktifkan Laravel scheduler pada server produksi agar grant yang kedaluwarsa dibersihkan otomatis setiap hari.
+
+Untuk menambahkan atau memperbarui akun operator, seeder dapat dijalankan secara khusus:
 
 ```bash
-php artisan db:seed --class=GuestSeeder --force
+php artisan db:seed --class=OperatorSeeder --force
 ```
+
+Seeder `GuestSeeder` tetap tersedia sebagai alias transisi satu rilis, tetapi deployment baru harus menggunakan `OperatorSeeder` dan variabel `OPERATOR_*`.
 
 Setiap perubahan route atau konfigurasi di production harus diikuti dengan pembersihan dan pembangunan ulang cache Laravel seperti langkah di atas.
